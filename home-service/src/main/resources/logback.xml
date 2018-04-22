@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    
+    <property name="LOG_HOME" value="./home_service_log" />
+    <property name="APP_NAME" value="home_service_log" />
+     
+    <!-- 控制台输出 --> 
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %X{address} %-5level %logger{50} - %msg%n</pattern> 
+        </encoder>
+    </appender> 
+     
+    <!-- 按照每天生成日志文件 -->  
+    <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender"> 
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>${LOG_HOME}/${APP_NAME}.log.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>10</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %X{address} %-5level %logger{50} - %msg%n</pattern>
+             <!--<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern> -->
+        </encoder>
+    </appender>
+    
+    <!-- 输出logstash文件 -->
+    <appender name="LOGSTASH" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"app_env":"${APP_NAME}"}</customFields>
+        </encoder>      
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/logstash-%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+     
+    <!-- 日志输出级别 -->
+    <root level="INFO">
+		<!-- <appender-ref ref="STDOUT"/> -->
+      <!-- 	<appender-ref ref="LOGSTASH"/> -->
+      <appender-ref ref="FILE" />
+    </root>
+</configuration>

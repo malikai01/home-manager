@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>学生信息</title>
+     <% include("/templates/common/top.html"){} %>
+	<script type="text/javascript" src="${ctxPath}/student/studentList.js"></script>
+</head>
+<body>
+
+ <!-- ######### 列表     ####### -->
+ 		<div class="m_r">
+ 			<div class="m_r_t"><span>学生信息</span></div>
+			<div class="blank40"></div>
+			<div class="tab_c">
+				<table width="100%" cellpadding="0" cellspacing="0" class="tab_pad10">
+					<td>
+						<input id="name" type="text" class="form-control" placeholder="姓名">
+						<label for="name" class="input-control-icon-left"><i class="icon icon-user "></i></label>
+						<input id="age" type="text" class="form-control" placeholder="年龄">
+						<label for="age" class="input-control-icon-left"><i class="icon icon-user "></i></label>
+					</td>
+				</table>
+			</div>
+			<div class="blank30"></div>
+			<div class="btn_con">
+				<ul>
+					<li><button class="btn_s" onclick="searchTable()">搜索</button></li>
+					<li><button class="btn_c" onclick="formSubmirReset()">重置</button></li>
+				</ul>
+			</div>
+			<div class="blank40"></div>
+			<div class=""><a href="#" class="link_orange fr" onclick="inputexe()"><i class="icon icon-signout"></i> 导出</a></div>
+			<div class="blank10"></div>
+			<div class="blank40"></div>
+			<div class="col-md-12">
+              <table class="table table-bordered" id="jqGridStudent" style="word-break:break-all; word-wrap:break-all">
+	            </table>
+	           
+	            
+
+				<div id="jqGridPagerStudent"></div>
+            </div>
+            
+			<div class="blank20"></div>
+			
+ <!-- ######### 图表     ####### -->
+				<div id="main" style="width: 100%;height:400px;"></div>
+				</div>	
+     
+    <script type="text/javascript">
+
+       	$(".form-date").datetimepicker(
+    {
+        language:  "zh-CN",
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0,
+        format: "yyyy-mm-dd"
+    });
+    </script>
+</body>
+</html>
