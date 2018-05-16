@@ -29,7 +29,7 @@ import javax.jms.Queue;
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class})
 @EnableSwagger2
 public class ApplicationWeb implements CommandLineRunner {
-    @Bean
+    /*@Bean
     public Queue queue() {
         return new ActiveMQQueue("mytest.queue");
     }
@@ -41,7 +41,7 @@ public class ApplicationWeb implements CommandLineRunner {
     public JmsMessagingTemplate jmsMessagingTemplate(ActiveMQConnectionFactory connectionFactory){
         System.out.println("get JmsMessagingTemplate");
         return new JmsMessagingTemplate(connectionFactory);
-    }
+    }*/
    /* @Bean
     public ActiveMQConnectionFactory connectionFactory() {
 //此链接信息可放入配置文件中

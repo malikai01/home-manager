@@ -17,7 +17,7 @@ import javax.jms.Queue;
 @EnableScheduling
 
 public class Producer {
-    @Autowired
+    /*@Autowired
     private JmsMessagingTemplate jmsMessagingTemplate;
     @Autowired
     private Queue queue;
@@ -30,7 +30,7 @@ public class Producer {
         this.jmsMessagingTemplate.convertAndSend(this.queue1, "hi,activeMQ-queue1");
 
     }
-
+*/
 
 
 }
