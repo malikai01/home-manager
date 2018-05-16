@@ -1,20 +1,22 @@
 package com.mlk.home.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.mlk.home.common.utils.ExcelUtil;
 import com.mlk.home.entity.Student;
 import com.mlk.home.page.PageInfo;
 import com.mlk.home.search.StudentSearchModel;
 import com.mlk.home.service.StudentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,5 +62,32 @@ public class StudentController {
     @ApiOperation(value = "xxx")
     public String xxx(){
         return "myTest";
+    }
+
+    @RequestMapping(value = "/studentExport",method = RequestMethod.GET)
+    public void partExport(HttpServletResponse response, StudentSearchModel studentSearchModel){
+        PageInfo<Student> page=studentService.queryAll(studentSearchModel);
+        List<Student> list=page.getRows();
+        System.out.println("-------------"+list.toString());
+        //JSONArray jsonArr = JSONArray.fromObject(list.toArray());
+        JSONArray jsonArr = new JSONArray();
+        for (Student a:list
+                ) {
+            JSONObject obj=new JSONObject();
+            obj.put("id",a.getId());
+            obj.put("name",a.getName());
+            obj.put("age",a.getAge());
+            obj.put("height",a.getHeight());
+            obj.put("weight",a.getWeight());
+            jsonArr.add(obj);
+        }
+        //获取业务数据集
+        Map<String,String> headMap = new HashMap<>();//获取属性-列头
+        headMap.put("name","姓名");
+        headMap.put("age","年龄");
+        headMap.put("height","身高");
+        headMap.put("weight","体重");
+        String title = "学生信息统计表";
+        ExcelUtil.downloadExcelFile(title,headMap,jsonArr,response);
     }
 }
