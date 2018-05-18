@@ -61,7 +61,7 @@ public class StudentController {
     @RequestMapping(value = "/xxx",method = RequestMethod.GET)
     @ApiOperation(value = "xxx")
     public String xxx(){
-        return "myTest";
+        return "register";
     }
 
     @RequestMapping(value = "/studentExport",method = RequestMethod.GET)
