@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.poi.hpsf.SummaryInformation;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -192,19 +193,22 @@ public class ExcelUtil {
         headerStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
         headerStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
         headerStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        headerStyle.setFillForegroundColor(HSSFColor.WHITE.index);
         Font headerFont = workbook.createFont();
         headerFont.setFontHeightInPoints((short) 12);
         headerFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         headerStyle.setFont(headerFont);
         // 单元格样式
         CellStyle cellStyle = workbook.createCellStyle();
-        cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
         cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
         cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
         cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);//设置前景填充样式
+        cellStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+
         Font cellFont = workbook.createFont();
         cellFont.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
         cellStyle.setFont(cellFont);
