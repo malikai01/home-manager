@@ -29,14 +29,14 @@
     </appender>
     
     <!-- 输出logstash文件 -->
-    <appender name="LOGSTASH" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!--<appender name="LOGSTASH" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <customFields>{"app_env":"${APP_NAME}"}</customFields>
         </encoder>      
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_HOME}/logstash-%d{yyyy-MM-dd}.log</fileNamePattern>
         </rollingPolicy>
-    </appender>
+    </appender>-->
      
     <!-- 日志输出级别 -->
     <root level="INFO">
