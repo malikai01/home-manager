@@ -6,16 +6,13 @@ import com.mlk.home.common.utils.EmptyUtils;
 import com.mlk.home.common.utils.Message;
 import com.mlk.home.entity.ManagerFamilyGroup;
 import com.mlk.home.entity.ManagerLogin;
+import com.mlk.home.search.ManagerLoginModel;
 import com.mlk.home.service.ManagerBaseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -40,11 +37,11 @@ public class ManagerBaseController {
 
     @RequestMapping(value = "/register/add" , method = RequestMethod.POST)
     @ApiOperation(value = "注册")//firstStep
-    public Message add(@RequestBody ManagerLogin model, HttpServletRequest request){
+    @ResponseBody
+    public Message add(@RequestBody ManagerLogin model){
         Message msg = new Message();
         Long loginId=managerBaseService.register(model);
         if(EmptyUtils.isNotEmpty(loginId)) {
-            request.setAttribute("loginId", loginId);
             msg.setSuccess(true);
             msg.setMsg("注册成功！");
             msg.setObj(loginId);
