@@ -1,6 +1,7 @@
 package com.mlk.home.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.mlk.home.common.utils.EmptyUtils;
 import com.mlk.home.common.utils.MD5Util;
 import com.mlk.home.entity.ManagerFamilyGroup;
 import com.mlk.home.entity.ManagerLogin;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by malikai on 2018-5-22.
@@ -25,22 +27,28 @@ public class ManagerBaseServiceImpl implements ManagerBaseService {
 
     @Override
     //@Transactional
-    public Boolean register(ManagerLoginModel model) {
-        ManagerLogin login = new ManagerLogin();
-        ManagerFamilyGroup group = new ManagerFamilyGroup();
-        login.setLoginName(model.getLoginName());
-        login.setPassword(MD5Util.getMD5(model.getPassword()));
-        login.setRegisterTime(new Date());
-        login.setIsDelete("0");
-        group.setAge(model.getAge());
-        group.setCreateTime(new Date());
-        group.setName(model.getName());
-        group.setIsDelete("0");
-        group.setRelation(model.getRelation());
-        managerLoginMapper.insert(login);
-        group.setLoginId(login.getId());
-        managerFamilyGroupMapper.insert(group);
+    public Long register(ManagerLogin model) {
 
+        model.setPassword(MD5Util.getMD5(model.getPassword()));
+        model.setRegisterTime(new Date());
+        model.setIsDelete("0");
+        managerLoginMapper.insert(model);
+        return model.getId();
+    }
+
+    @Override
+    public Boolean binding(List<ManagerFamilyGroup> list) {
+        for (ManagerFamilyGroup group :
+                list) {
+            group.setCreateTime(new Date());
+            group.setIsDelete("0");
+            managerFamilyGroupMapper.insert(group);
+        }
         return true;
+    }
+
+    @Override
+    public Boolean cancelBinding(Long id) {
+        return null;
     }
 }

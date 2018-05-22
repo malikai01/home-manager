@@ -1,6 +1,9 @@
 package com.mlk.home.search;
 
+import com.mlk.home.entity.ManagerFamilyGroup;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by malikai on 2018-5-22.
@@ -8,9 +11,7 @@ import java.io.Serializable;
 public class ManagerLoginModel implements Serializable{
     private String loginName;
     private String password;
-    private String name;
-    private Integer age;
-    private String relation;
+    private List<ManagerFamilyGroup> groups;
 
     public String getLoginName() {
         return loginName;
@@ -28,27 +29,11 @@ public class ManagerLoginModel implements Serializable{
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public List<ManagerFamilyGroup> getGroups() {
+        return groups;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public String getRelation() {
-        return relation;
-    }
-
-    public void setRelation(String relation) {
-        this.relation = relation;
+    public void setGroups(List<ManagerFamilyGroup> groups) {
+        this.groups = groups;
     }
 }
