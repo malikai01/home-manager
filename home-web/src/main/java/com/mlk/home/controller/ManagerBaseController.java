@@ -9,6 +9,7 @@ import com.mlk.home.entity.ManagerLogin;
 import com.mlk.home.service.ManagerBaseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +21,7 @@ import java.util.List;
 /**
  * Created by malikai on 2018-5-22.
  */
-@RestController
+@Controller
 @RequestMapping("/manager")
 @Api(description = "用户基本信息")
 public class ManagerBaseController {
