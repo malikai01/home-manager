@@ -37,18 +37,27 @@ public class ManagerBaseServiceImpl implements ManagerBaseService {
     }
 
     @Override
-    public Boolean binding(List<ManagerFamilyGroup> list) {
-        for (ManagerFamilyGroup group :
-                list) {
-            group.setCreateTime(new Date());
-            group.setIsDelete("0");
-            managerFamilyGroupMapper.insert(group);
+    public Boolean binding(ManagerFamilyGroup group) {
+        group.setCreateTime(new Date());
+        group.setIsDelete("0");
+        int result=0;
+        if(EmptyUtils.isNotEmpty(group.getId())){
+            group.setUpdateTime(new Date());
+            result = managerFamilyGroupMapper.updateByPrimaryKey(group);
+        }else {
+             result = managerFamilyGroupMapper.insert(group);
         }
-        return true;
+        return result>0;
     }
 
     @Override
     public Boolean cancelBinding(Long id) {
-        return null;
+        int result = managerFamilyGroupMapper.cancelBinding(id);
+        return result>0;
+    }
+
+    @Override
+    public List<ManagerFamilyGroup> queryByLoginId(Long loginId) {
+        return managerFamilyGroupMapper.queryByLoginId(loginId);
     }
 }

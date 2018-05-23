@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mlk.home.mapper.ManagerFamilyGroupMapper">
+	<resultMap id="BaseResultMap" type="com.mlk.home.entity.ManagerFamilyGroup" >
+		<!--
+          WARNING - @mbggenerated
+        -->
+	</resultMap>
+
+    <select id="queryByLoginId"  resultType="com.mlk.home.entity.ManagerFamilyGroup">
+             select * from manager_familygroup  where login_id=#{loginId} and is_delete = '0'
+    </select>
+    
+    <update id="cancelBinding" >
+        update manager_familygroup set is_delete = '1',update_time=now() where id=#{id}
+    </update>
+</mapper>

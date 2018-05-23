@@ -11,7 +11,9 @@ import java.util.List;
 public interface ManagerBaseService {
     Long register(ManagerLogin model);
 
-    Boolean binding(List<ManagerFamilyGroup> list);
+    Boolean binding(ManagerFamilyGroup group);
 
     Boolean cancelBinding(Long id);
+
+    List<ManagerFamilyGroup> queryByLoginId(Long loginId);
 }

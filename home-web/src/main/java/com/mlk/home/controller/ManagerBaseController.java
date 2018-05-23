@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -29,9 +30,16 @@ public class ManagerBaseController {
     public String register(){
         return "register";
     }
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public String login(){
+        return "login";
+    }
 
-    @RequestMapping(value = "/register/nextStep",method = RequestMethod.GET)
-    public String nextStep(){
+    @RequestMapping(value = "/register/nextStep/{loginId}",method = RequestMethod.GET)
+    public String nextStep(@PathVariable Long loginId,HttpServletRequest req){
+        List<ManagerFamilyGroup> listBinding = managerBaseService.queryByLoginId(loginId);
+        req.setAttribute("listBinding", listBinding);
+        req.setAttribute("loginId", loginId);
         return "nextStep";
     }
 
@@ -53,12 +61,34 @@ public class ManagerBaseController {
     }
     @RequestMapping(value = "/register/binding" , method = RequestMethod.POST)
     @ApiOperation(value = "绑定家庭成员")//secondStep
-    public DataResult<Boolean> binding(@RequestBody List<ManagerFamilyGroup> list){
-        return DataResult.ok(managerBaseService.binding(list));
+    @ResponseBody
+    public Message binding(@RequestBody ManagerFamilyGroup group){
+        Message msg = new Message();
+        Boolean result = managerBaseService.binding(group);
+        if(result) {
+            List<ManagerFamilyGroup> list = managerBaseService.queryByLoginId(group.getLoginId());
+            msg.setSuccess(true);
+            msg.setMsg("绑定成功！");
+            msg.setObj(list);
+        }else {
+            msg.setSuccess(false);
+            msg.setMsg("绑定失败！");
+        }
+        return msg;
     }
-    @RequestMapping(value = "/register/cancelBinding" , method = RequestMethod.POST)
+    @RequestMapping(value = "/register/cancelBinding/{id}" , method = RequestMethod.GET)
     @ApiOperation(value = "取消绑定家庭成员")
-    public DataResult<Boolean> cancelBinding(Long id){
-        return DataResult.ok(managerBaseService.cancelBinding(id));
+    @ResponseBody
+    public Message cancelBinding(@PathVariable Long id){
+        Message msg = new Message();
+        Boolean result = managerBaseService.cancelBinding(id);
+        if(result) {
+            msg.setSuccess(true);
+            msg.setMsg("删除成功！");
+        }else {
+            msg.setSuccess(false);
+            msg.setMsg("删除失败！");
+        }
+        return msg;
     }
 }

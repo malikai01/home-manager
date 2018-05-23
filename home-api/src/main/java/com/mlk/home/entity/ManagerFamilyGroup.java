@@ -34,6 +34,27 @@ public class ManagerFamilyGroup implements Serializable{
     @Column(name = "is_delete")
     private String isDelete;
 
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "memo")
+    private String memo;
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
     public String getIsDelete() {
         return isDelete;

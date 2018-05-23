@@ -3,5 +3,9 @@
  */
 
 function login() {
-    
+
+}
+
+function register() {
+    window.location="/home-web/manager/register";
 }
