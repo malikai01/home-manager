@@ -52,7 +52,6 @@ background-color: #fff;background-clip: padding-box;border: 1px solid #cbcbcb;bo
 .nav-sitemap dt{width:80px;}
 /*头部*/
 .top_header{height:60px;background:#3d95d5;}
-.logo{width:120px; height:44px; margin-top:9px; float:left;}
 
 /*主站导航*/
 .topmenu {float:left; padding-top: 20px; padding-left:12px; font-size:16px;}

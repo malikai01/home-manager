@@ -28,7 +28,7 @@ public class ManagerBaseController {
 
     @RequestMapping(value = "/register",method = RequestMethod.GET)
     public String register(){
-        return "register";
+        return "register1";
     }
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(){

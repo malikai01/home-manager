@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>注  册</title>
+    <% include("/templates/common/top.html"){} %>
+    <script type="text/javascript" src="${ctxPath}/manager/registerxx.js"></script>
+    <script type="text/javascript" src="${ctxPath}/manager/verifyCode.js"></script>
+    <link rel="stylesheet" href="${ctxPath}/css/layout.css" />
+</head>
+<body>
+<style>
+    *{
+        font-family: 微软雅黑;
+        outline: none;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<div class="header" style="height:100px;">
+    <div class="mainbox">
+        <div class="logo" style="margin-top:0px;"><a href="www.baidu.com"><img src="../img/logo.png"></a>
+            <span class="dl-txt">欢迎注册</span></div>
+
+    </div>
+</div>
+<div class="mainbox">
+    <div class="conter">
+        <div class="Tabconter">
+            <form id="registForm" action="" method="post">
+                <input type="hidden" name="channelCode" id="channelCode"
+                       value=""/>
+                <input type="hidden" name="registerSource" value=""/>
+                <input type="hidden" name="randomNum" id="randomNum" value=""/>
+                <input type="hidden" id="showToHiden" value="">
+                <input type="hidden" id="path" value="/bsp">
+                <input type="hidden" id="randomVal" name="randomCode"/>
+                <input type="hidden" id="returnUrl" name="returnUrl" value=""/>
+                <input type="hidden" id="registerSourceId" name="registerSourceId"
+                       value=""/>
+                <input type="hidden" id="skipCode" name="skipCode" value=""/>
+                <input type="hidden" id="segNo" name="segNo" value=""/>
+                <input type="hidden" name="applySourceType" id="applySourceType"/>
+                <input type="hidden" name="applySource" id="applySource"/>
+                <input type="hidden" name="linkMan" id="linkMan"/>
+                <input type="hidden" id="formToken" name="formToken" value="720d3913-400e-4ec3-9eeb-e1762cb3f145"/>
+                <ul>
+                    <li>
+                        <label>您 的 姓 名</label>
+                        <font>请填写您的姓名</font>
+                        <input name="name" id="username" type="text" onblur="validateInputValue(this,false);"/>
+                        <i style="display: none" class="iconfont">&#xe603;</i>
+                        <div>
+                            <div style="clear: both;"></div>
+                            <p style="display: none"><i class="iconfont">&#xe601;</i>请填写您的真实姓名（最多30个字符）</p>
+                            <p style="display: none"><i class="iconfont">&#xe602;</i><span></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <label>登 录 账 号</label>
+                        <font>请设置您的登录账号</font>
+                        <input name="loginNickName" id="loginNickName" type="text"
+                               onblur="validateInputValue(this,false);"/>
+                        <i style="display: none" class="iconfont">&#xe603;</i>
+                        <div>
+                            <div style="clear: both;"></div>
+                            <p style="display: none"><i class="iconfont">&#xe601;</i>6-18个字符,由字母、数字或下划线组成</p>
+                            <p style="display: none"><i class="iconfont">&#xe602;</i><span></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <label>设 置 密 码</label>
+                        <font>请设置您的登录密码</font>
+                        <input id="password" type="password" name="passWord"
+                               onblur="validateInputValue(this,false);"/>
+                        <i style="display: none" class="iconfont">&#xe603;</i>
+                        <div>
+                            <div style="clear: both;"></div>
+                            <p style="display: none"><i class="iconfont">&#xe601;</i>8～20个字符,由字母、数字或符号组成（字母区分大小写）
+                            </p>
+                            <p style="display: none"><i class="iconfont">&#xe602;</i><span></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <label>确 认 密 码</label>
+                        <font>请再次输入登录密码</font>
+                        <input id="confirm-password" type="password" size="80" name="passWord2"
+                               onblur="validateInputValue(this,false);">
+                        <i style="display: none" class="iconfont">&#xe603;</i>
+                        <div>
+                            <div style="clear: both;"></div>
+                            <p style="display: none"><i class="iconfont">&#xe601;</i>请再次输入登录密码</p>
+                            <p style="display: none"><i class="iconfont">&#xe602;</i><span></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <label>身份证号码</label>
+                        <font>请输入您的身份证号码</font>
+                        <input type="text" name="cardNumber" id="cardNumber"
+                               onblur="validateInputValue(this,false);"/>
+                        <i style="display: none" class="iconfont">&#xe603;</i>
+                        <div>
+                            <div style="clear: both;"></div>
+                            <p style="display: none"><i class="iconfont">&#xe601;</i>请填写您的18位身份证号码</p>
+                            <p style="display: none"><i class="iconfont">&#xe602;</i><span></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <label>身份证正面</label>
+                        <font>点击右侧按钮上传文件</font>
+                        <input class="test" type="text" disabled="true"/>
+                        <label class="file">
+                            <input type="file" name="file"
+                                   style="width:95px;filter:alpha(opacity=0);opacity:0;position:absolute;z-index:1;"
+                                   id="cardNumberAttach" value="" onchange="ajaxUpload(this);"/>
+                            <input type="hidden" name="cardNumberAttachId" id="cardNumberAttachId"/>
+                            <span class="upload_span" style="height: 100%;width: 100%">上传文件</span>
+                        </label>
+                        <i style="display: none" class="iconfont">&#xe603;</i>
+                        <div>
+                            <div style="clear: both;"></div>
+                            <p style="display: none"><i class="iconfont">&#xe601;</i>请上传您的身份证正面</p>
+                            <p style="display: none"><i class="iconfont">&#xe602;</i><span></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <label>身份证反面</label>
+                        <font>点击右侧按钮上传文件</font>
+                        <input class="test" type="text" disabled="true"/>
+                        <label class="file">
+                            <input type="file" name="file"
+                                   style="width:95px;filter:alpha(opacity=0);opacity:0;position:absolute;z-index:1;"
+                                   id="cardNumberAttach2" value="" onchange="ajaxUpload(this);"/>
+                            <input type="hidden" name="cardNumberAttachId2"
+                                   id="cardNumberAttachId2"/>
+                            <span class="upload_span" style="z-index:100;">上传文件</span>
+                        </label>
+                        <i style="display: none" class="iconfont">&#xe603;</i>
+                        <div>
+                            <div style="clear: both;"></div>
+                            <p style="display: none"><i class="iconfont">&#xe601;</i>请上传您的身份证反面</p>
+                            <p style="display: none"><i class="iconfont">&#xe602;</i><span></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <label>手 机 号 码</label>
+                        <font>请输入您的手机号码</font>
+                        <input name="phone" id="mobile" onblur="validateInputValue(this,false);"/>
+                        <i style="display: none" class="iconfont">&#xe603;</i>
+                        <div>
+                            <div style="clear: both;"></div>
+                            <p style="display: none"><i class="iconfont">&#xe601;</i>完成验证后，该手机可接收系统通知、自主找回密码</p>
+                            <p style="display: none"><i class="iconfont">&#xe602;</i><span></span></p>
+                        </div>
+                    </li>
+                    <li class="mobile_validate">
+                        <label>验 证 码</label>
+                        <font>请输入验证码</font>
+                        <input type="text" class="test" id="ccode" value="" maxlength="4" name="ccode"
+                               onblur="validateInputValue(this,false);"/>
+                        <span class="span_btn"><img id="ccodeImg" src=""
+                                                    style="height: 100%;width: 100%;margin-bottom: 5px"
+                                                    onclick="document.getElementById('ccodeImg').src='/bsp/pages/login/ccode.jsp?'+Math.random()"></span>
+                        <i style="display: none" class="iconfont">&#xe603;</i>
+                        <div>
+                            <div style="clear: both;"></div>
+                            <p style="display: none"><i class="iconfont">&#xe601;</i>看不清？点击图片更换验证码</p>
+                            <p style="display: none"><i class="iconfont">&#xe602;</i><span></span></p>
+                        </div>
+                    </li>
+                    <li class="mobile_validate">
+                        <label>手机验证码</label>
+                        <font>请输入您手机收到的验证码</font>
+                        <input id="securityCode" type="text" size="5" name="securityCode" class="test"
+                               onblur="validateInputValue(this,false)"/>
+                        <span class="span_btn" id="btnSendCode" onclick="sendMessage()">获 取 验 证 码</span>
+                        <i style="display: none" class="iconfont">&#xe603;</i>
+                        <div>
+                            <div style="clear: both;"></div>
+                            <p style="display: none"><i class="iconfont">&#xe601;</i>请输入您手机收到的验证码</p>
+                            <p style="display: none"><i class="iconfont">&#xe602;</i><span></span></p>
+                        </div>
+                    </li>
+                    <button id="submitBtn" class="next" type="button" onclick="submitForm();">立即注册</button>
+                </ul>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

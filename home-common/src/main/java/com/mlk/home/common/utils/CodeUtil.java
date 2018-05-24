@@ -14,12 +14,12 @@ import java.util.Random;
  * Created by malikai on 2018-5-24.
  */
 public class CodeUtil {
-     private static int width = 90;// 定义图片的width
-     private static int height = 20;// 定义图片的height
+     private static int width = 100;// 定义图片的width
+     private static int height = 30;// 定义图片的height
      private static int codeCount = 4;// 定义图片上显示验证码的个数
      private static int xx = 15;
-     private static int fontHeight = 18;
-     private static  int codeY = 16;
+     private static int fontHeight = 25;
+     private static  int codeY = 25;
      private static char[] codeSequence = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
                              'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 

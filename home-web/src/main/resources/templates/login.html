@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>登  录</title>
+    <title>李凯家庭管理登录</title>
     <% include("/templates/common/top.html"){} %>
     <script type="text/javascript" src="${ctxPath}/manager/loginxx.js"></script>
     <link rel="stylesheet" href="${ctxPath}/css/login.css" />
@@ -13,14 +13,14 @@
 <div class="login_content">
     <div class="login_box">
         <div class="login_field">
-            <input id="loginName" name="loginName" type="text" tabindex="1" class="int" value="请输入用户名">
+            <input id="loginName" name="loginName" type="text" tabindex="1" class="int" placeholder="请输入用户名">
         </div>
         <div class="login_field">
-            <input class="int1" tabindex="2" type="password" id="password" value="请输入密码">
+            <input class="int1" tabindex="2" type="password" id="password" placeholder="请输入密码">
         </div>
         <div class="clear"></div>
         <div class="loginbtn">
-            <input id="loginBtn" class="btn-blue btn-l" type="submit" onclick="return login()" value="登录" style="width:315px;height:45px !important;line-height:45px;" tabindex="4">
+            <input id="loginBtn" class="btn-blue btn-l" type="submit" onclick="return login()" placeholder="登录" style="width:315px;height:45px !important;line-height:45px;" tabindex="4">
         </div>
         <div class="bottom">
             <a class="rem" href="">忘记密码</a>

@@ -39,8 +39,8 @@ function callback(data) {
         $("#info").html("温馨提示您：验证成功了！");
         return;
     } else {
-        alert(data);
-        $("#info").html(data);
+        alert("验证失败！");
+        $("#info").html("验证失败！");
         return;
     }
 }

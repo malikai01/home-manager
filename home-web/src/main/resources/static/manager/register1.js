@@ -1,187 +1,157 @@
-var i=1;
-function nextStep() {
-    if($('#loginName').val()=="" ){
-        alert("家庭名称不能为空");
+/**
+ * Created by malikai on 2018-5-24.
+ */
+
+window.onload = function () {
+    try {
+        $(parent.document.getElementsByTagName('iframe')[0]).css('height', $('body').height() + 50);
+    } catch (e) {
+    }
+};
+var count = 60; //间隔函数，1秒执行
+var curCount;//当前剩余秒数
+$(function () {
+    if (''.length > 0) {
+        Util.showMsg('');
+    }
+    //显示提示
+    $('input').focus(function () {
+        var ele = $(this);
+        if (ele.attr('id') == 'ccode' || ele.attr('id') == 'securityCode') {
+            ele = ele.next();
+        } else if (ele.attr('id') == 'countrycode') {
+            ele = ele.prev();
+        }
+        ele.next().next().children().eq(1).show();
+        ele.next().next().children().eq(2).hide();
+        ele.parent().removeClass("newhight");
+        ele.parent().removeClass("warn");
+    })
+    //绑定上传点击事件
+    $(".file").click(function () {
+        $(this).next().click();
+    });
+    //font 实现类似 placehol der 的效果
+    $('.Tabconter ul li input').focus(function () {
+        if ($(this).next().attr('class') != 'file') {
+            $(this).parent('li').find('font').hide();
+        }
+    }).blur(function () {
+        if ($(this).val().length == 0) {
+            $(this).parent('li').find('font').show();
+        }
+    })
+    $('.Tabconter ul li font').on('click', function () {
+        if ($(this).next().attr('class') != 'file') {
+            $(this).hide();
+            $(this).parent('li').find('input').focus();
+        }
+    })
+    $('.tavlist ul li').on('click', function () {
+        var index = $(this).index() + 1;
+        $(this).addClass('active').siblings().removeClass("active");
+        $('.conter>.Tabconter:nth-child(' + index + ')').show().siblings().hide();
+    });
+    //ajax 上传文件事件绑定
+    //        $(":file").bind("change", ajaxUpload());
+    if (false) {
+        $(".mobile_validate").hide();
+    }
+});
+
+function ajaxUpload(ele) {
+    var item = $(ele);
+    var type = $(ele).attr("id") == 'cardNumberAttach' ? "19" : "20";
+    var parent = $(ele).parent();
+    var id_input = item.next();
+    $.ajaxFileUpload({
+        url: '/bsp/register/upload_ajax',
+        fileElementId: item.attr("id"),
+        data: {
+            type: type,
+            attachId: item.next().val(),
+        },
+        dataType: 'json',
+        success: function (data, status) {
+            if (data.result) {
+                var fileName = data.originalFilename;
+                if (fileName.length > 20) {
+                    fileName = fileName.replace(fileName.substring(7, fileName.length - 6), '...');
+                }
+                parent.prev().val(fileName);
+                id_input.val(data.attachId);
+                parent.prev().prev().html("");
+                showTips(parent, true);
+            } else {
+                showTips(parent, false, data.message);
+            }
+        },
+        error: function (data, status, e) {//服务器响应失败处理函数
+            if (data.responseText.indexOf("文件过大") > 0) {
+                showTips(parent, false, '文件过大,请重新上传文件');
+            } else {
+                Util.showMsg("系统错误");
+            }
+        }
+    })
+}
+
+
+function sendMessage() {
+    if (!getRandomVal()) {
+        return;
+    }
+    curCount = count;
+    //设置button效果，开始计时
+    $("#btnSendCode").attr("onclick", "null");
+    var index;
+    index = setInterval(function () {
+        if (curCount == 0) {
+            $("#btnSendCode").attr("onclick", "sendMessage()");
+            $("#btnSendCode").html("重 新 发 送");
+            clearInterval(index);
+        } else {
+            $("#btnSendCode").html(curCount-- + "s后重新发送");
+        }
+    }, 1000);
+}
+
+function getRandomVal() {
+    if (!validateInputValue(document.getElementById("mobile"))) {
         return false;
     }
-    if($('#password').val()=="" ){
-        alert("密码不能为空");
-        return false;
-    }
-    checkPassword();
-    checkCode()
-    var loginName = $("#loginName").val();
-    var password = $("#password").val();
-    $.ajax({
-        url :'/home-web/manager/register/add',
-        type : 'POST',
-        cache : false,
-        async: false,
-        contentType: "application/json;charset=utf-8",
-        data: JSON.stringify({ 'loginName' : loginName ,'password' : password }),
-        success : function(data) {
-            if(data.success){
-                //alert(data.msg);
-                var loginId=data.obj;
-                window.location="/home-web/manager/register/nextStep/"+loginId;
-            }else{
-                alert(data.msg);
+    return Util.sendMessage('/bsp', $("#mobile").val(), $("#ccode").val(), function (d) {
+        if (d.message != null) {
+            switch (d.message) {
+                case "2":
+                    showTips($('#ccode'), false, "验证码失效");
+                    break;
+                case "3":
+                    showTips($('#ccode'), false, "验证码超时");
+                    break;
+                case "4":
+                    showTips($('#ccode'), false, "验证码错误 请重新填写");
+                    break;
             }
-        },error :function(){
-            alert("网络异常，请稍后再试");
+            $("#ccodeImg").click();
+            return false;
+        } else {
+            showTips($('#ccode'), true);
+            return true;
         }
-    });
+    },"");
 }
 
-function addList() {
-    alert($("#bankListTable").html());
-}
-
-function add_tr(obj) {
-    var tr = $(obj).parent().parent();
-    tr.after(tr.clone());
-}
-function del_tr(obj) {
-    $(obj).parent().parent().remove();
-}
-
-function saveBinding(e){
-    var name=$('#name').val();
-    var age=$('#age').val();
-    var memo=$('#memo').val();
-    var gender=$('#gender').val();
-    var relation=$('#relation').val();
-    var loginId=$('#loginId').val();
-    var id = $('#id').val();
-
-    var $btn = $(e);
-    $btn.button('loading');
-
-    setTimeout(function() {
-        $.ajax({
-            url:"/home-web/manager/register/binding",
-            contentType: "application/json;charset=utf-8",
-            clearForm : false,
-            resetForm : false,
-            type : 'post',
-            data: JSON.stringify({ 'id' : id,'name' : name ,'age' : age,'memo' : memo,'gender' : gender,'relation' : relation,'loginId':loginId }),
-            success : function(data) {
-                $btn.button('reset');
-                if(data.success){
-                    alert(data.msg);
-                    getBinding(data);
-                    emptyBinding();
-                }else{
-                    alert(data.msg);
-                }
-            },error:function(data){
-                alert("网络异常，请稍后再试");
-                $btn.button('reset');
-            }
-        });
-    }, 100);
-}
-
-function getBinding(data){
-    $("#bindingTable tbody").html('');
-    var htmlt="";
-    var data = data.obj;//得到一个LIST
-    if(data){
-        for(var i = 0;i<data.length;i++){  //循环LIST
-            var binding = data[i];//获取LIST里面的对象
-            var gender= binding.gender=="00"?"男":"女";
-            var name = binding.name == null?"": binding.name;
-            var age = binding.age == null ? "":binding.age;
-            var relation = binding.relation == null ? "" : binding.relation;
-            var memo = binding.memo == null || binding.memo == "null" ? "":binding.memo;
-            htmlt=htmlt+'<tr>';
-            htmlt=htmlt+'<td style="word-wrap:break-word;word-break:break-all;">'+name+'</td>';
-            htmlt=htmlt+'<td>'+age+'</td>';
-            htmlt=htmlt+'<td style="word-wrap:break-word;word-break:break-all;">'+relation+'</td>';
-            htmlt=htmlt+'<td>'+gender+'</td>';
-            htmlt=htmlt+'<td style="word-wrap:break-word;word-break:break-all;">'+memo+'</td>';
-            htmlt=htmlt+'<td style="word-wrap:break-word;word-break:break-all;">';
-            htmlt=htmlt+'<a href="javascript:;"  class="blue" style="padding-right:5px" onclick="editBinding(\''+binding.id+'\',\''+binding.name+'\',\''+binding.age+'\',\''+binding.relation+'\',\''+binding.gender+'\',\''+binding.memo+'\')">编辑</a>';
-            htmlt=htmlt+'<a href="javascript:;"  class="blue"  onclick="delBinding(\''+binding.id+'\')">删除</a>';
-
-            htmlt=htmlt+'</td></tr>';
+function checkSecurityCode() {
+    return Util.checkSecurityCoe('/bsp', $("#securityCode").val(), $("#mobile").val(), function (d) {
+        if (!d.isCorrect) {
+            showTips($('#securityCode'), false, "手机验证码错误，请重新填写或重新发送手机验证码");
+            return false;
+        } else {
+            showTips($('#securityCode'), true);
+            return true;
         }
-    }
-    $("#bindingTable tbody").html(htmlt);
-}
-
-function editBinding(id,name,age,relation,gender,memo){
-    emptyBinding();
-    $("#id").val(id);
-    $("#name").val(name);
-    $("#age").val(age);
-    $("#relation").val(relation);
-    $("#gender").val(gender);
-    $("#memo").val(memo);
-    $("#name").focus()
-}
-
-function emptyBinding(){
-    $("#id").val("");
-    $("#name").val("");
-    $("#age").val("");
-    $("#relation").val("");
-    $("#gender").val("");
-    $("#memo").val("");
-
-}
-
-function delBinding(id){
-
-    if(confirm("您确定要删除这条绑定信息吗")){
-        $.ajax({
-            type : "post",
-            async:false,
-            cache:false,
-            url :"/home-web/manager/register/cancelBinding/"+id,
-            dataType : "json",
-            success : function(data) {
-                if(data.success){
-                    alert(data.msg);
-                    getBinding(data);
-                    emptyBinding();
-                }else{
-                    alert(data.msg);
-                }
-            },error:function(data){
-               alert("网络异常,请稍后再试!");
-            }
-        });
-
-    }
-}
-
-function toLogin() {
-    window.location="/home-web/manager/login";
-}
-
-function checkPassword() {
-    var password = $('#password').val();
-    var confirm = $('#confirm').val();
-    if(password != confirm){
-        alert("密码不一致");
-    }
-}
-// 验证码验证
-function checkCode() {
-    var code = $("#veryCode").val();
-    // alert(code);
-    $.ajax({
-        type : "POST",
-        url : "/home-web/veryCode/checkCode",
-        data : {"code":code},
-        success : function (data) {
-            if(data==0){
-                alert("验证码失效");
-                return false;
-            }
-        }
-    });
+    })
 }
 
 
@@ -370,3 +340,70 @@ function validateInputValue(ele, isCheckAll) {
     }
     return true;
 }
+
+
+function showTips(ele, validateResult, tipValue, showGreenIcon) {
+    showGreenIcon = showGreenIcon == null ? true : showGreenIcon;
+    if (ele.attr('id') == 'ccode' || ele.attr('id') == 'securityCode') {
+        showGreenIcon = false;
+        ele = ele.next();
+    } else if (ele.attr('class') == 'file') {
+        showGreenIcon = false;
+    }
+    ele.next().next().children().eq(1).hide();
+    if (validateResult) {
+        if (showGreenIcon) {
+            ele.next().show();
+        }
+        ele.next().next().children().eq(2).hide();
+        ele.parent().removeClass("newhight");
+        ele.parent().removeClass("warn");
+    } else {
+        if (showGreenIcon) {
+            ele.next().hide();
+        }
+        ele.next().next().children().eq(2).children("span").html(tipValue);
+        ele.next().next().children().eq(2).show();
+        ele.parent().addClass("newhight");
+        ele.parent().addClass("warn");
+    }
+}
+
+function submitForm() {
+    $("#submitBtn").attr('disabled', 'true');
+    if (!validateInputValue(null, true)) {
+        $("#submitBtn").removeAttr('disabled');
+        return;
+    }
+    //判断session 缓存中是否有,代注册标记
+    var appsourFlag ='';
+    if("1"==appsourFlag){
+        var url = '/bsp/memberV/recordApplySource?type=4';//代个人注册申请来源 详细见 contants 配置 LOG_APPLYSOURCE_TYPE_4
+        var retVal = Util.showModalDialog(url);
+        //兼容IE 判断返回值类型
+        var arr = retVal.split("||");
+        var applySource = "";
+        var linkMan = "";
+        //alert("arr[0]="+arr[0]+",arr[1]="+arr[1]+",arr[2]="+arr[2]+",arr[3]="+arr[3]);
+        if(arr[0]=='0'){ //不是ie 的模式
+            //判断是否 取到申请类型 ,没有则报错
+            applySource =$("#applySource").val();
+            linkMan =$("#linkMan").val();
+        }
+        if(arr[0]=='1'){//兼容IE
+            applySource = arr[2];
+            linkMan = arr[3];
+            //设置表单
+            $("#applySourceType").val(arr[1]);
+            $("#applySource").val(applySource)
+            $("#linkMan").val(linkMan)
+        }
+        //alert(applySource+"|+++|");
+        if(applySource==""){
+            alert("您还未选择申请来源!")
+            return;
+        }
+    }
+    $("#registForm").submit();
+}
+
