@@ -1,5 +1,15 @@
 var i=1;
 function nextStep() {
+    if($('#loginName').val()=="" ){
+        alert("家庭名称不能为空");
+        return false;
+    }
+    if($('#password').val()=="" ){
+        alert("密码不能为空");
+        return false;
+    }
+    checkPassword();
+    checkCode()
     var loginName = $("#loginName").val();
     var password = $("#password").val();
     $.ajax({
@@ -148,4 +158,28 @@ function delBinding(id){
 
 function toLogin() {
     window.location="/home-web/manager/login";
+}
+
+function checkPassword() {
+    var password = $('#password').val();
+    var confirm = $('#confirm').val();
+    if(password != confirm){
+        alert("密码不一致");
+    }
+}
+// 验证码验证
+function checkCode() {
+    var code = $("#veryCode").val();
+    // alert(code);
+    $.ajax({
+        type : "POST",
+        url : "/home-web/veryCode/checkCode",
+        data : {"code":code},
+        success : function (data) {
+            if(data==0){
+                alert("验证码失效");
+                return false;
+            }
+        }
+    });
 }
