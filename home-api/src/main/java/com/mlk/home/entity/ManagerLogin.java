@@ -28,14 +28,21 @@ public class ManagerLogin implements Serializable{
     @Column(name = "is_delete")
     private String isDelete;
 
+    @Column(name = "login_nick_name")
+    private String loginNickName;
 
-    public String getIsDelete() {
-        return isDelete;
-    }
+    @Column(name = "card_number")
+    private String cardNumber;
 
-    public void setIsDelete(String isDelete) {
-        this.isDelete = isDelete;
-    }
+    @Column(name = "card_number_attachId")
+    private Integer cardNumberAttachId;
+
+    @Column(name = "card_number_attachId2")
+    private Integer cardNumberAttachId2;
+
+    @Column(name = "phone")
+    private String phone;
+
 
     public Long getId() {
         return id;
@@ -75,5 +82,53 @@ public class ManagerLogin implements Serializable{
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public String getLoginNickName() {
+        return loginNickName;
+    }
+
+    public void setLoginNickName(String loginNickName) {
+        this.loginNickName = loginNickName;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public Integer getCardNumberAttachId() {
+        return cardNumberAttachId;
+    }
+
+    public void setCardNumberAttachId(Integer cardNumberAttachId) {
+        this.cardNumberAttachId = cardNumberAttachId;
+    }
+
+    public Integer getCardNumberAttachId2() {
+        return cardNumberAttachId2;
+    }
+
+    public void setCardNumberAttachId2(Integer cardNumberAttachId2) {
+        this.cardNumberAttachId2 = cardNumberAttachId2;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
