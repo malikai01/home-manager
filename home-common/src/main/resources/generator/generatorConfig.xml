@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <!-- targetRuntime="MyBatis3" 生成会带有example类和方法 -->
+  <!-- targetRuntime="MyBatis3Simple" 不生成生成会带有example类和方法 -->
+  <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+	<!-- 通用mapper插件 -->
+    <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+      <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+      <!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
+      <property name="caseSensitive" value="true"/>
+    </plugin>
+    <!-- 序列化插件 -->
+    <!--<plugin type="com.ouyeelbuy.workflow.common.util.SerializablePlugin"></plugin>-->
+    <!-- 一般情况下由于MBG生成的注释信息没有任何价值，而且有时间戳的情况下每次生成的注释都不一样，
+    	使用版本控制的时候每次都会提交，因而一般情况下我们都会屏蔽注释信息，可以如下配置
+     -->
+    <commentGenerator>
+    	<property name="suppressAllComments" value="true"/>
+    	<property name="suppressDate" value="true"/>
+	</commentGenerator>
+
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                    connectionURL="jdbc:mysql://127.0.0.1:3306/test"
+                    userId="root"
+                    password="root">
+    </jdbcConnection>
+
+    <javaModelGenerator  targetPackage="com.mlk.home.entity" targetProject="E:\myproject">
+    	<property name="constructorBased" value="true"/>
+    	<property name="rootClass" value="com.mlk.home.base.BaseEntity"/>
+    	<property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="mybatis.mapper"  targetProject="E:\myproject"/>
+
+    <javaClientGenerator targetPackage="com.mlk.home.mapper" targetProject="E:\myproject" type="XMLMAPPER" />
+
+    <table tableName="take_names">
+       <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+    </table>
+  </context>
+</generatorConfiguration>
