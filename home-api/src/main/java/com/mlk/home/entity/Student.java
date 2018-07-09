@@ -1,5 +1,7 @@
 package com.mlk.home.entity;
 
+import com.mlk.home.base.BaseEntity;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -7,7 +9,7 @@ import java.io.Serializable;
  * Created by malikai on 2018-4-17.
  */
 @Table(name = "student")
-public class Student implements Serializable {
+public class Student extends BaseEntity {
     /**
      * 主键id
      */

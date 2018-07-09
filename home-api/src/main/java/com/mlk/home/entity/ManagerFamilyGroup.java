@@ -1,5 +1,7 @@
 package com.mlk.home.entity;
 
+import com.mlk.home.base.BaseEntity;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -8,7 +10,7 @@ import java.util.Date;
  * Created by malikai on 2018-5-22.
  */
 @Table(name = "manager_familygroup")
-public class ManagerFamilyGroup implements Serializable{
+public class ManagerFamilyGroup extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
