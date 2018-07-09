@@ -16,4 +16,14 @@
       <arg column="family_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
+  <select id="queryNames" parameterType="com.mlk.home.search.TakeNamesModel" resultType="com.mlk.home.entity.TakeNames">
+    SELECT * from take_names where family_id = #{familyId}
+    <if test=" type !=null and type !=''">
+      and type = #{type}
+    </if>
+    <if test=" name !=null and name !=''">
+      and name like '%${name}%'
+    </if>
+    ORDER BY update_time DESC
+  </select>
 </mapper>
