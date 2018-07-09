@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by malikai on 2018-7-9.
  */
-@Service(protocol = {" dubbo "},timeout = 6000)
+@Service(protocol = {"dubbo"},timeout = 6000)
 @Transactional
 public class TakeNamesServiceImpl implements TakeNamesService {
     @Autowired

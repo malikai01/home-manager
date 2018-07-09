@@ -6,9 +6,7 @@ import com.mlk.home.search.TakeNamesModel;
 import com.mlk.home.service.TakeNamesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by malikai on 2018-7-9.
@@ -18,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TakeNamesController {
     @Reference
     private TakeNamesService takeNamesService;
-    @RequestMapping("/add")
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    @ResponseBody
     public boolean addNames(@RequestBody TakeNames names){
         return takeNamesService.addNnames(names);
     }
-    @RequestMapping("/query")
+    @RequestMapping(value = "/query",method = RequestMethod.POST)
+    @ResponseBody
     public TakeNames queryNames(@RequestBody TakeNamesModel model){
         return takeNamesService.queryNames(model);
     }
