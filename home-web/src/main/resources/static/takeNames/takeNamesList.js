@@ -70,12 +70,13 @@ function filteDataAll(result){
         var takeNames_body = '';
         var myDate = new Date();
         $.each(result,function(i,e){
+            var isShow = nullToString(e.isShow)=='1'?'是':'否';
             takeNames_body += '<tr>';
             takeNames_body+='<td>'+(i+1)+'</td>';
             takeNames_body += '<td style="word-wrap:break-word;word-break:break-all;text-align:center;">'+nullToString(e.name)+'</td>';
-            takeNames_body += '<td style="word-wrap:break-word;word-break:break-all;text-align:center;">'+nullToString(e.type)+'</td>';
+            takeNames_body += '<td style="word-wrap:break-word;word-break:break-all;text-align:center;">'+getType(e.type)+'</td>';
             takeNames_body += '<td style="word-wrap:break-word;word-break:break-all;text-align:center;">'+nullToString(e.memo)+'</td>';
-            takeNames_body += '<td style="word-wrap:break-word;word-break:break-all;text-align:center;">'+nullToString(e.isShow)+'</td>';
+            takeNames_body += '<td style="word-wrap:break-word;word-break:break-all;text-align:center;">'+isShow+'</td>';
             takeNames_body += '<td style="word-wrap:break-word;word-break:break-all;text-align:center;">'+dateFtt("yyyy-MM-dd hh:mm:ss",new Date(e.updateTime))+'</td>';
             takeNames_body += '<td><button style="text-align: center" class="btn btn-success"   type="button" onclick="editName('+e.id+')">修  改</button></td>';
             takeNames_body += '</tr>';
@@ -92,24 +93,22 @@ function empty(obj){
     }
     return '';
 }
+function getType(temp){
+    if(temp==null){
+        return "";
+    }else if (temp=="00"){
+        return "中文";
+    }else if(temp=="01"){
+        return "英文";
+    }else {
+        return "其他";
+    }
+}
 
 function nullToString(temp){
     if(temp==null){
         return "";
     }else return temp
-}
-function getStatus(temp){
-    if(temp==null){
-        return "";
-    }else if (temp=="00"){
-        return "待审批";
-    }else if(temp=="01"){
-        return "审批通过";
-    }else if(temp=="02"){
-        return "审批驳回";
-    }else {
-        return temp;
-    }
 }
 
 function reset() {
@@ -119,16 +118,76 @@ function reset() {
 }
 
 function addName() {
-    window.location='/home-web/v1/takeNams/addHtml';
+    window.location='/home-web/v1/takeNames/addHtml';
 }
 function editName(cId) {
-    window.location='/home-web/v1/takeNams/editHtml'+cId;
+    window.location='/home-web/v1/takeNames/editHtml/'+cId;
+}
+function backList() {
+    window.location='/home-web/v1/takeNames/queryHtml';
 }
 
-function formatDate(temp){
-    if(temp==null || temp==''){
-        return "";
-    }else{
-        dateFtt("yyyy-MM-dd hh:mm:ss",new Date(temp));
-    };
+function saveNames(e) {
+    var name=$('#name').val();
+    var memo=$('#memo').val();
+    var type=$('#type').val();
+
+    var $btn = $(e);
+    $btn.button('loading');
+    setTimeout(function() {
+        $.ajax({
+            url:"/home-web/v1/takeNames/add",
+            contentType: "application/json;charset=utf-8",
+            clearForm : false,
+            resetForm : false,
+            type : 'post',
+            data: JSON.stringify({ 'name' : name ,'memo' : memo,'type' : type }),
+            success : function(data) {
+                $btn.button('reset');
+                if(data.success){
+                    alert(data.msg);
+                }else{
+                    alert(data.msg);
+                }
+            },error:function(data){
+                alert("网络异常，请稍后再试");
+                $btn.button('reset');
+            }
+        });
+    }, 100);
+}
+function emptyName() {
+    $('#name').val('');
+    $('#memo').val('');
+    $('#type').val('');
+}
+
+function editNames(e) {
+    var name=$('#name').val();
+    var memo=$('#memo').val();
+    var type=$('#type').val();
+    var id = $('#id').val();
+    var $btn = $(e);
+    $btn.button('loading');
+    setTimeout(function() {
+        $.ajax({
+            url:"/home-web/v1/takeNames/edit",
+            contentType: "application/json;charset=utf-8",
+            clearForm : false,
+            resetForm : false,
+            type : 'post',
+            data: JSON.stringify({ 'id':id,'name' : name ,'memo' : memo,'type' : type }),
+            success : function(data) {
+                $btn.button('reset');
+                if(data.success){
+                    alert(data.msg);
+                }else{
+                    alert(data.msg);
+                }
+            },error:function(data){
+                alert("网络异常，请稍后再试");
+                $btn.button('reset');
+            }
+        });
+    }, 100);
 }

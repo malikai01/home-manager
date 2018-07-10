@@ -24,6 +24,12 @@
     <if test=" name !=null and name !=''">
       and name like '%${name}%'
     </if>
+    <if test=" memo !=null and memo !=''">
+      and name like '%${memo}%'
+    </if>
     ORDER BY update_time DESC
+  </select>
+  <select id="queryById" parameterType="java.lang.Integer" resultType="com.mlk.home.entity.TakeNames">
+    SELECT  * FROM take_names where id = #{id}
   </select>
 </mapper>

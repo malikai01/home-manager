@@ -11,4 +11,8 @@ public interface TakeNamesService {
     boolean addNnames(TakeNames names);
 
     PageInfo<TakeNames> queryNames(TakeNamesModel model);
+
+    TakeNames queryById(Integer cId);
+
+    boolean editNnames(TakeNames names);
 }

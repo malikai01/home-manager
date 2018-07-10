@@ -30,4 +30,14 @@ public class TakeNamesServiceImpl implements TakeNamesService {
         PageInfo pageInfo = new PageInfo<>(model.getPage(),model.getRows(),list.getTotal(),list.getResult());
         return pageInfo;
     }
+
+    @Override
+    public TakeNames queryById(Integer cId) {
+        return takeNamesMapper.queryById(cId);
+    }
+
+    @Override
+    public boolean editNnames(TakeNames names) {
+        return takeNamesMapper.updateByPrimaryKeySelective(names)>0;
+    }
 }
