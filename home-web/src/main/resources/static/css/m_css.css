@@ -391,4 +391,36 @@ input::-ms-clear { display: none; }
 .order_box_one .space{ width: 90px; background:#fff url(../img/icon12.png) center center no-repeat;}
 
 
-
+#pagination{
+  background: #e3e3e3;
+  height: 40px;
+  line-height: 40px;
+  width: 890px;
+  margin-top: 20px;
+  text-align: right;
+}
+#pagination .active{
+  color: #c41929;
+  border: 1px solid transparent;
+  background: #e3e3e3;
+  font-size: 14px;
+  padding: 3px 4px;
+  margin-right: 10px;
+}
+#pagination a,#pagination span{
+  border: 1px solid #cdcdcd;
+  background: #fff;
+  font-size: 14px;
+  padding: 3px 4px;
+  color: #000;
+  margin-right: 10px;
+}
+#pagination a.jump-btn{
+  margin-right: 20px;
+  margin-left: 20px;
+}
+#pagination input{
+  height: 18px;
+  line-height:18px;
+  width: 30px;
+}

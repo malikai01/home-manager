@@ -28,7 +28,7 @@ function queryAll() {
              * 返回的数据根据自己需要处理
              */
             filteDataAll(data.rows);
-            $('#page_take_names').pagination({
+            $('#pagination').pagination({
                 pageCount: data.total,
                 jump: true,
                 coping: true,
