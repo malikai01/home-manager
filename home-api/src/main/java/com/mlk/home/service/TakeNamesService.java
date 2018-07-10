@@ -1,6 +1,7 @@
 package com.mlk.home.service;
 
 import com.mlk.home.entity.TakeNames;
+import com.mlk.home.page.PageInfo;
 import com.mlk.home.search.TakeNamesModel;
 
 /**
@@ -9,5 +10,5 @@ import com.mlk.home.search.TakeNamesModel;
 public interface TakeNamesService {
     boolean addNnames(TakeNames names);
 
-    TakeNames queryNames(TakeNamesModel model);
+    PageInfo<TakeNames> queryNames(TakeNamesModel model);
 }

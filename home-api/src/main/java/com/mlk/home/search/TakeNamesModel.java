@@ -1,11 +1,14 @@
 package com.mlk.home.search;
 
 import com.mlk.home.base.BaseEntity;
+import com.mlk.home.base.BaseSearchModel;
+
+import java.io.Serializable;
 
 /**
  * Created by malikai on 2018-7-9.
  */
-public class TakeNamesModel extends BaseEntity{
+public class TakeNamesModel extends BaseSearchModel implements Serializable {
     private Integer familyId;
     private String type;
     private String name;
