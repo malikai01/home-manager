@@ -12,6 +12,15 @@ public class TakeNamesModel extends BaseSearchModel implements Serializable {
     private Integer familyId;
     private String type;
     private String name;
+    private String memo;
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
 
     public Integer getFamilyId() {
         return familyId;

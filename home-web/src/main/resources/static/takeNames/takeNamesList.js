@@ -1,7 +1,7 @@
 /**
  * Created by malikai on 2018-7-10.
  */
-var pageSize=10;
+var pageSize=2;
 
 
 $(function(){
