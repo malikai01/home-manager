@@ -1,7 +1,7 @@
 /**
  * Created by malikai on 2018-7-10.
  */
-var pageSize=2;
+var pageSize=10;
 
 
 $(function(){
@@ -21,7 +21,7 @@ function queryAll() {
             "name": name,
             "type": type,
             "memo": memo,
-            "pageSize": pageSize
+            "rows": pageSize
         },
         success: function (data) {
             /*
@@ -40,11 +40,11 @@ function queryAll() {
                 isHide: false,
                 callback: function (api) {
                     var data = {
-                        pageIndex: api.getCurrent(),
+                        page: api.getCurrent(),
                         "name": name,
                         "type": type,
                         "memo": memo,
-                        "pageSize": pageSize
+                        "rows": pageSize
                     };
                     $.ajax({
                         type: "GET",
