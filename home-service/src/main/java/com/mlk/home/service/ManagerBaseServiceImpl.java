@@ -60,4 +60,9 @@ public class ManagerBaseServiceImpl implements ManagerBaseService {
     public List<ManagerFamilyGroup> queryByLoginId(Long loginId) {
         return managerFamilyGroupMapper.queryByLoginId(loginId);
     }
+
+    @Override
+    public ManagerLogin login(ManagerLogin model) {
+        return managerLoginMapper.login(model.getLoginName(),model.getPassword());
+    }
 }

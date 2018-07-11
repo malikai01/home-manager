@@ -49,7 +49,7 @@ public class ManagerBaseController {
     public Message add(@RequestBody ManagerLogin model){
         Message msg = new Message();
         Long loginId=managerBaseService.register(model);
-        if(EmptyUtils.isNotEmpty(loginId)) {
+        if(loginId>0) {
             msg.setSuccess(true);
             msg.setMsg("注册成功！");
             msg.setObj(loginId);
@@ -88,6 +88,23 @@ public class ManagerBaseController {
         }else {
             msg.setSuccess(false);
             msg.setMsg("删除失败！");
+        }
+        return msg;
+    }
+
+    @RequestMapping(value = "/login" , method = RequestMethod.POST)
+    @ApiOperation(value = "登录")//firstStep
+    @ResponseBody
+    public Message login(@RequestBody ManagerLogin model){
+        Message msg = new Message();
+        ManagerLogin response=managerBaseService.login(model);
+        if(response!=null) {
+            msg.setSuccess(true);
+            msg.setMsg("登录成功！");
+            msg.setObj(response);
+        }else {
+            msg.setSuccess(false);
+            msg.setMsg("登录失败，请稍后重试！");
         }
         return msg;
     }

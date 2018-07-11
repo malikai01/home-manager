@@ -16,4 +16,6 @@ public interface ManagerBaseService {
     Boolean cancelBinding(Long id);
 
     List<ManagerFamilyGroup> queryByLoginId(Long loginId);
+
+    ManagerLogin login(ManagerLogin model);
 }
