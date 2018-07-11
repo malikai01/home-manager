@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mlk.home.mapper.ManagerLoginMapper" >
+  <resultMap id="BaseResultMap" type="com.mlk.home.entity.ManagerLogin" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="login_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="register_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="is_delete" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="login_nick_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="card_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="card_number_attachId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="card_number_attachId2" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  
+  <select id="login" resultType="com.mlk.home.entity.ManagerLogin">
+    SELECT * FROM manager_login where login_name = #{loginName} and password = #{password}
+  </select>
+</mapper>
