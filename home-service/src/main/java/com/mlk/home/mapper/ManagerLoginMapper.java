@@ -9,4 +9,6 @@ import tk.mybatis.mapper.common.BaseMapper;
  */
 public interface ManagerLoginMapper extends BaseMapper<ManagerLogin>{
     ManagerLogin login(@Param("loginName") String loginName, @Param("password") String password);
+
+    ManagerLogin queryByLoginName(@Param("loginName")String loginName);
 }

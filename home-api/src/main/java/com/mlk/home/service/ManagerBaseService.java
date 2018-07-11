@@ -18,4 +18,6 @@ public interface ManagerBaseService {
     List<ManagerFamilyGroup> queryByLoginId(Long loginId);
 
     ManagerLogin login(ManagerLogin model);
+
+    ManagerLogin queryByLoginName(String loginName);
 }

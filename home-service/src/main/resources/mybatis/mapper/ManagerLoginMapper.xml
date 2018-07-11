@@ -23,4 +23,7 @@
   <select id="login" resultType="com.mlk.home.entity.ManagerLogin">
     SELECT * FROM manager_login where login_name = #{loginName} and password = #{password}
   </select>
+  <select id="queryByLoginName" resultType="com.mlk.home.entity.ManagerLogin">
+    SELECT * from manager_login where login_name = #{loginName}
+  </select>
 </mapper>

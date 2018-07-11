@@ -48,6 +48,12 @@ public class ManagerBaseController {
     @ResponseBody
     public Message add(@RequestBody ManagerLogin model){
         Message msg = new Message();
+        ManagerLogin response = managerBaseService.queryByLoginName(model.getLoginName());
+        if(response!=null){
+            msg.setSuccess(false);
+            msg.setMsg("用户名已存在！");
+            return msg;
+        }
         Long loginId=managerBaseService.register(model);
         if(loginId>0) {
             msg.setSuccess(true);

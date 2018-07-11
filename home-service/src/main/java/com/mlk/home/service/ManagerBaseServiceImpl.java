@@ -28,7 +28,6 @@ public class ManagerBaseServiceImpl implements ManagerBaseService {
     @Override
     //@Transactional
     public Long register(ManagerLogin model) {
-
         model.setPassword(MD5Util.getMD5(model.getPassword()));
         model.setRegisterTime(new Date());
         model.setIsDelete("0");
@@ -64,5 +63,10 @@ public class ManagerBaseServiceImpl implements ManagerBaseService {
     @Override
     public ManagerLogin login(ManagerLogin model) {
         return managerLoginMapper.login(model.getLoginName(),model.getPassword());
+    }
+
+    @Override
+    public ManagerLogin queryByLoginName(String loginName) {
+        return managerLoginMapper.queryByLoginName(loginName);
     }
 }
