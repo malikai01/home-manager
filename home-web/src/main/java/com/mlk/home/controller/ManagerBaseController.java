@@ -1,19 +1,27 @@
 package com.mlk.home.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.mlk.home.common.utils.DataResult;
-import com.mlk.home.common.utils.EmptyUtils;
-import com.mlk.home.common.utils.Message;
+import com.alibaba.fastjson.JSONObject;
+import com.mlk.home.annotation.CurrentUser;
+import com.mlk.home.annotation.LoginRequired;
+import com.mlk.home.common.utils.*;
+import com.mlk.home.cookie.CookieUtils;
 import com.mlk.home.entity.ManagerFamilyGroup;
 import com.mlk.home.entity.ManagerLogin;
 import com.mlk.home.search.ManagerLoginModel;
 import com.mlk.home.service.ManagerBaseService;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,6 +31,7 @@ import java.util.List;
 @RequestMapping("/manager")
 @Api(description = "用户基本信息")
 public class ManagerBaseController {
+    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(ManagerBaseController.class);
     @Reference
     private ManagerBaseService managerBaseService;
 
@@ -101,10 +110,18 @@ public class ManagerBaseController {
     @RequestMapping(value = "/login" , method = RequestMethod.POST)
     @ApiOperation(value = "登录")//firstStep
     @ResponseBody
-    public Message login(@RequestBody ManagerLogin model){
+    public Message login(@RequestBody ManagerLogin model,HttpServletResponse httpServletResponse){
+        //Cookie[] cookies =  request.getCookies();
         Message msg = new Message();
         ManagerLogin response=managerBaseService.login(model);
         if(response!=null) {
+            String token = TokenUtils.createJwtToken(response.getLoginName());
+            Cookie cookie = new Cookie("JWT", token);
+            cookie.setPath("/");
+            // 过期时间设为10min
+            cookie.setMaxAge(60*10);
+            httpServletResponse.addCookie(cookie);
+            //httpServletResponse.setHeader("JWT",token);
             msg.setSuccess(true);
             msg.setMsg("登录成功！");
             msg.setObj(response);
@@ -113,5 +130,14 @@ public class ManagerBaseController {
             msg.setMsg("登录失败，请稍后重试！");
         }
         return msg;
+    }
+    @ResponseBody
+    @LoginRequired
+    @RequestMapping(value = "/modifyUserInfo")
+    public String modifyUserInfo(@CurrentUser ManagerLogin user,HttpServletRequest request ) {
+         ManagerLogin login = managerBaseService.queryByLoginName(CookieUtils.getName(request));
+        logger.info("===="+login.getLoginName());
+        logger.info("===="+user.getLoginName());
+        return "";
     }
 }
