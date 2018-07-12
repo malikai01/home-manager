@@ -15,6 +15,7 @@ import com.mlk.home.cookie.CookieUtils;
 import com.mlk.home.entity.ManagerLogin;
 import com.mlk.home.filter.LoginAuthFilter;
 import com.mlk.home.service.ManagerBaseService;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -22,10 +23,8 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 /**
  * NeedAuthority拦截器
  *
- * @author gerry
- * @version 1.0, 2016年11月7日
- * @since com.hujiang 1.0.0
  */
+@Component
 public class NeedAuthorityInterceptor extends HandlerInterceptorAdapter{
     @Reference
     private ManagerBaseService managerBaseService;
@@ -53,10 +52,10 @@ public class NeedAuthorityInterceptor extends HandlerInterceptorAdapter{
         String accessToken = LoginAuthFilter.getContext(LoginAuthFilter.Header_AccessToken1);
         ManagerLogin user = null;
         if (EmptyUtils.isEmpty(accessToken)) {
-            //TODO 从cookie中获取
+            // 从cookie中获取
             user=managerBaseService.queryByLoginName(CookieUtils.getName(request));
         } else {
-           //TODO validate
+           //TODO validate token
         }
         if (user == null) {
             throw new Exception("No Authority!");

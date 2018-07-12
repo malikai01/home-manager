@@ -130,9 +130,9 @@ public class ManagerBaseController {
     @NeedAuthority
     @RequestMapping(value = "/modifyUserInfo")
     public String modifyUserInfo(HttpServletRequest request) {
-         ManagerLogin login = managerBaseService.queryByLoginName(CookieUtils.getName(request));
+         //ManagerLogin login = managerBaseService.queryByLoginName(CookieUtils.getName(request));
          ManagerLogin login1 = UserContext.getInstance().getUser();
-        logger.info("===="+login.getLoginName());
+        //logger.info("===="+login.getLoginName());
         logger.info("===="+login1.getLoginName());
         return "";
     }

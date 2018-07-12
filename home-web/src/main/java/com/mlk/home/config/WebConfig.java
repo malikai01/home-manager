@@ -1,10 +1,10 @@
 package com.mlk.home.config;
 
 import com.mlk.home.filter.LoginAuthFilter;
-import com.mlk.home.filter.SessionFilter;
 import org.beetl.core.resource.ClasspathResourceLoader;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 import org.beetl.ext.spring.BeetlSpringViewResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
@@ -14,8 +14,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -80,6 +78,20 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         filterRegistrationBean.addInitParameter("excludedPages",userInfoExcludedPages);
         return filterRegistrationBean;
     }
+    @Autowired
+    private NeedAuthorityInterceptor needAuthorityInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(needAuthorityInterceptor);
+    }
+
+  /*  @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // 拦截所有请求，通过判断是否有 @LoginRequired 注解 决定是否需要登录
+        registry.addInterceptor(authenticationInterceptor()).addPathPatterns("*//**//**");
+        super.addInterceptors(registry);
+    }*/
 
     /*@Override
     public void addInterceptors(InterceptorRegistry registry) {
