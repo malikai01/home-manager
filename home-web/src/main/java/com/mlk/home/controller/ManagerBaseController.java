@@ -136,4 +136,9 @@ public class ManagerBaseController {
         logger.info("===="+login1.getLoginName());
         return "";
     }
+
+    @RequestMapping(value = "/test",method = RequestMethod.GET)
+    public String test(){
+        return "test";
+    }
 }
