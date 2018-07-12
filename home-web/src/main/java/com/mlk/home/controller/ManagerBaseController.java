@@ -1,19 +1,15 @@
 package com.mlk.home.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.fastjson.JSONObject;
-import com.mlk.home.annotation.CurrentUser;
-import com.mlk.home.annotation.LoginRequired;
+import com.mlk.home.UserContext;
+import com.mlk.home.annotation.NeedAuthority;
 import com.mlk.home.common.utils.*;
 import com.mlk.home.cookie.CookieUtils;
 import com.mlk.home.entity.ManagerFamilyGroup;
 import com.mlk.home.entity.ManagerLogin;
-import com.mlk.home.search.ManagerLoginModel;
 import com.mlk.home.service.ManagerBaseService;
-import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -121,7 +116,7 @@ public class ManagerBaseController {
             // 过期时间设为10min
             cookie.setMaxAge(60*10);
             httpServletResponse.addCookie(cookie);
-            //httpServletResponse.setHeader("JWT",token);
+            httpServletResponse.setHeader("access_token",token);
             msg.setSuccess(true);
             msg.setMsg("登录成功！");
             msg.setObj(response);
@@ -132,12 +127,13 @@ public class ManagerBaseController {
         return msg;
     }
     @ResponseBody
-    @LoginRequired
+    @NeedAuthority
     @RequestMapping(value = "/modifyUserInfo")
-    public String modifyUserInfo(@CurrentUser ManagerLogin user,HttpServletRequest request ) {
+    public String modifyUserInfo(HttpServletRequest request) {
          ManagerLogin login = managerBaseService.queryByLoginName(CookieUtils.getName(request));
+         ManagerLogin login1 = UserContext.getInstance().getUser();
         logger.info("===="+login.getLoginName());
-        logger.info("===="+user.getLoginName());
+        logger.info("===="+login1.getLoginName());
         return "";
     }
 }

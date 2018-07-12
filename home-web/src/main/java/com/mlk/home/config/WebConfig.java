@@ -1,5 +1,6 @@
 package com.mlk.home.config;
 
+import com.mlk.home.filter.LoginAuthFilter;
 import com.mlk.home.filter.SessionFilter;
 import org.beetl.core.resource.ClasspathResourceLoader;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
@@ -66,19 +67,19 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return beetlSpringViewResolver;
     }
 
- /*   @Bean
+    @Bean
     public FilterRegistrationBean filterRegistrationBean(){
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         List<String> urlPatterns = new ArrayList<String>();
 
-        SessionFilter testFilter = new SessionFilter();   //new过滤器
-        urlPatterns.add("*//*");      //指定需要过滤的url
+        LoginAuthFilter loginFilter = new LoginAuthFilter();   //new过滤器
+        urlPatterns.add("/*");      //指定需要过滤的url
         filterRegistrationBean.setName("userLoginFiler");
-        filterRegistrationBean.setFilter(testFilter);       //set
+        filterRegistrationBean.setFilter(loginFilter);       //set
         filterRegistrationBean.setUrlPatterns(urlPatterns);
         filterRegistrationBean.addInitParameter("excludedPages",userInfoExcludedPages);
         return filterRegistrationBean;
-    }*/
+    }
 
     /*@Override
     public void addInterceptors(InterceptorRegistry registry) {
