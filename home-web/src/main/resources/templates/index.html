@@ -22,73 +22,18 @@
 <div class='top_top'>
     <div class='logbox' style="background: #f9f9f9;height: 30px;width: 100%;border-bottom: 1px solid #ededed;font-size: 14px;line-height: 20px;color: #333;">
             <div class="top container" style="margin-right:auto;margin-left:auto;width: 940px;position:initial;">
-                <div class="fd-left" style="margin-right: 100px;width: 470px;height: 20px;float: none;position: absolute">
+                <div class="fd-left" style="margin-right: 100px;width: 200px;height: 20px;float: none;position: absolute">
                     <a href="/home-web/manager/index" title="首页"><img style="height:20px" src='/home-web/img/logo2.png' /></a><a href="/home-web/manager/login">请登录</a>  |  <a href="/home-web/manager/register" target="_blank">免费注册</a>
                 </div>
                 <div class="topbar-mid" style=" width: 400px;float: none;margin-left: 360px;">
-                    <a href="/home-web/manager/index" class="m-h-s">首页</a>  |
-                    <a href="/home-web/v1/takeNames/queryHtml" class="m-h-s" target="_blank">预备姓名</a>  |
-                    <a href="" class="m-h-s" target="_blank">家庭成员</a>  |
-                    <a href="" class="m-h-s" target="_blank">婴儿知识</a>  |
-                    <a href="" class="m-h-s" target="_blank">母婴商城</a>
+                    <a href="/home-web/manager/index" >首页</a>  |
+                    <a href="/home-web/v1/takeNames/queryHtml"  target="_blank">预备姓名</a>  |
+                    <a>家庭成员</a>  |
+                    <a>婴儿知识</a>  |
+                    <a>母婴商城</a>
                 </div>
             </div>
     </div>
-</div>
-<div class="m_r">
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="icon icon-home"></i> 预备姓名列表</a></li>
-        <li class="active">预备姓名列表</li>
-    </ol>
-    <table class="table table-borderless table_v_m table-fixed">
-        <tbody>
-        <tr>
-            <td width="5%" >姓名：</td>
-            <td width="20%" ><input type="text" class="form-control" id="name"></td>
-            <td width="5%" >备注：</td>
-            <td width="20%" >
-                <input type="text" class="form-control" id="memo">
-            </td>
-            <td width="5%">类型：</td>
-            <td width="20%">
-                <select class="form-control" id="type"  name="type" >
-                    <option  value="">请选择</option>
-                    <option  value="00">中文</option>
-                    <option  value="01">英文</option>
-                    <option  value="02">其他</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="6" align="center">
-                <button class="btn btn-success" id="chaxun" onclick="queryAll()">查询</button>
-                <button class="btn btn-success" onclick="addName()">新增</button>
-                <button class="btn btn-success" onclick="reset()">重置</button>
-            </td>
-        </tr>
-
-        </tbody>
-    </table>
-    <table class="table table-bordered table_v_m table_a_c" >
-        <thead>
-        <tr>
-            <th width="8%" style="text-align:center;">序号</th>
-            <th width="10%" style="text-align:center;">姓名</th>
-            <th width="10%" style="text-align:center;">类型</th>
-            <th width="30%" style="text-align:center;">备注</th>
-            <th width="10%" style="text-align:center;">是否展示</th>
-            <th width="20%" style="text-align:center;">更新时间</th>
-            <th style="text-align:center;">操作</th>
-        </tr>
-        </thead>
-        <tbody id="takeNamesListTable">
-
-        </tbody>
-    </table>
-    <!--page-->
-    <div id="pagination"></div>
-    <!--page end-->
-    <div class="clearfix"></div>
 </div>
 </body>
 </html>
