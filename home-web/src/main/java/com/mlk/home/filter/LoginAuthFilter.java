@@ -17,6 +17,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.Maps;
 import com.mlk.home.common.utils.EmptyUtils;
@@ -73,20 +74,30 @@ public class LoginAuthFilter implements Filter {
         try {
             Map<String, String> localContext = USER_LOCAL_CONTEXT.get();
             HttpServletRequest httpRequest = (HttpServletRequest) request;
+            String accessToken =httpRequest.getHeader(Header_AccessToken);
             Cookie[] cookies = httpRequest.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
                     localContext.put(cookie.getName(), cookie.getValue());
+                    if(cookie.getName().equals("JWT")){
+                        accessToken = cookie.getValue();
+                    }
                 }
             }
-            String accessToken =httpRequest.getHeader(Header_AccessToken);
 
+            if (EmptyUtils.isEmpty(accessToken)) {
+                accessToken = httpRequest.getHeader(Header_AccessToken1);
+            }
             if (EmptyUtils.isEmpty(accessToken)) {
                 accessToken = httpRequest.getHeader(Header_AccessToken1);
             }
 
             if (EmptyUtils.isNotEmpty(accessToken)) {
                 localContext.put(Header_AccessToken1, accessToken);
+            }else {
+                String contextPath=httpRequest.getContextPath();
+                HttpServletResponse httpResponse = (HttpServletResponse) response;
+                httpResponse.sendRedirect(contextPath +"/manager/login");
             }
 
             String loacalDate = httpRequest.getHeader(Local_Date);

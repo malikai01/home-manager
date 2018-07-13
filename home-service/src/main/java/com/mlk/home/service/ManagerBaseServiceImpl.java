@@ -27,7 +27,7 @@ public class ManagerBaseServiceImpl implements ManagerBaseService {
 
     @Override
     //@Transactional
-    public Long register(ManagerLogin model) {
+    public Integer register(ManagerLogin model) {
         model.setPassword(MD5Util.getMD5(model.getPassword()));
         model.setRegisterTime(new Date());
         model.setIsDelete("0");

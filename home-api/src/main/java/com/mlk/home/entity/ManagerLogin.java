@@ -13,7 +13,7 @@ import java.util.Date;
 public class ManagerLogin extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
+    private Integer id ;
 
     @Column(name = "login_name")
     private String loginName;
@@ -46,11 +46,11 @@ public class ManagerLogin extends BaseEntity{
     private String phone;
 
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

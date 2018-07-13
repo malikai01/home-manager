@@ -1,7 +1,10 @@
 package com.mlk.home.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.mlk.home.UserContext;
+import com.mlk.home.annotation.NeedAuthority;
 import com.mlk.home.common.utils.Message;
+import com.mlk.home.entity.ManagerLogin;
 import com.mlk.home.entity.TakeNames;
 import com.mlk.home.page.PageInfo;
 import com.mlk.home.search.TakeNamesModel;
@@ -37,10 +40,12 @@ public class TakeNamesController {
     }
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     @ResponseBody
+    @NeedAuthority
     public Message editNames(@RequestBody TakeNames names){
+        ManagerLogin login = UserContext.getInstance().getUser();
         names.setUpdateTime(new Date());
         names.setIsShow("1");
-        names.setFamilyId(1);
+        names.setFamilyId(login.getId());
         Message msg = new Message();
         boolean result = takeNamesService.editNnames(names);
         msg.setSuccess(result);
@@ -49,11 +54,13 @@ public class TakeNamesController {
     }
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
+    @NeedAuthority
     public Message addNames(@RequestBody TakeNames names){
+        ManagerLogin login = UserContext.getInstance().getUser();
         names.setCreateTime(new Date());
         names.setUpdateTime(new Date());
         names.setIsShow("1");
-        names.setFamilyId(1);
+        names.setFamilyId(login.getId());
         Message msg = new Message();
         boolean result = takeNamesService.addNnames(names);
         msg.setSuccess(result);
@@ -62,8 +69,10 @@ public class TakeNamesController {
     }
     @RequestMapping(value = "/query",method = RequestMethod.GET)
     @ResponseBody
+    @NeedAuthority
     public PageInfo<TakeNames> queryNames( TakeNamesModel model){
-        model.setFamilyId(1);
+        ManagerLogin login = UserContext.getInstance().getUser();
+        model.setFamilyId(login.getId());
         return takeNamesService.queryNames(model);
     }
 }

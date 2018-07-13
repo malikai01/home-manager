@@ -58,7 +58,7 @@ public class ManagerBaseController {
             msg.setMsg("用户名已存在！");
             return msg;
         }
-        Long loginId=managerBaseService.register(model);
+        Integer loginId=managerBaseService.register(model);
         if(loginId>0) {
             msg.setSuccess(true);
             msg.setMsg("注册成功！");
@@ -102,7 +102,7 @@ public class ManagerBaseController {
         return msg;
     }
 
-    @RequestMapping(value = "/login" , method = RequestMethod.POST)
+    @RequestMapping(value = "/toLogin" , method = RequestMethod.POST)
     @ApiOperation(value = "登录")//firstStep
     @ResponseBody
     public Message login(@RequestBody ManagerLogin model,HttpServletResponse httpServletResponse){
@@ -117,6 +117,7 @@ public class ManagerBaseController {
             cookie.setMaxAge(60*10);
             httpServletResponse.addCookie(cookie);
             httpServletResponse.setHeader("access_token",token);
+            UserContext.getInstance().setUser(response);
             msg.setSuccess(true);
             msg.setMsg("登录成功！");
             msg.setObj(response);

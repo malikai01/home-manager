@@ -9,7 +9,7 @@ import java.util.List;
  * Created by malikai on 2018-5-22.
  */
 public interface ManagerBaseService {
-    Long register(ManagerLogin model);
+    Integer register(ManagerLogin model);
 
     Boolean binding(ManagerFamilyGroup group);
 

@@ -9,7 +9,7 @@ function login(e) {
     $btn.button('loading');
     setTimeout(function() {
         $.ajax({
-            url:"/home-web/manager/login",
+            url:"/home-web/manager/toLogin",
             contentType: "application/json;charset=utf-8",
             clearForm : false,
             resetForm : false,

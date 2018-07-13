@@ -12,6 +12,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Token 生成
@@ -89,11 +90,11 @@ public class TokenUtils {
                 .parseClaimsJws(jwt).getBody();
         return claims;
     }
-    public static boolean validateJWT(JSONObject jsonObject){
+    public static boolean validateJWT(Map<String, Object> map){
         boolean flag = false;
-        if(EmptyUtils.isNotEmpty(jsonObject)){
-            String iss = (String) jsonObject.get("iss");
-            String sub = (String) jsonObject.get("sub");
+        if(EmptyUtils.isNotEmpty(map)){
+            String iss = (String) map.get("iss");
+            String sub = (String) map.get("sub");
             if(iss.equals(issuer) && sub.equals(subject)){
                 flag = true;
             }

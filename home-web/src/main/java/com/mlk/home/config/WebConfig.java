@@ -71,7 +71,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         List<String> urlPatterns = new ArrayList<String>();
 
         LoginAuthFilter loginFilter = new LoginAuthFilter();   //new过滤器
-        urlPatterns.add("/*");      //指定需要过滤的url
+        urlPatterns.add("/v1/*");      //指定需要过滤的url
         filterRegistrationBean.setName("userLoginFiler");
         filterRegistrationBean.setFilter(loginFilter);       //set
         filterRegistrationBean.setUrlPatterns(urlPatterns);
