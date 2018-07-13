@@ -32,11 +32,11 @@ public class ManagerBaseController {
 
     @RequestMapping(value = "/register",method = RequestMethod.GET)
     public String register(){
-        return "register1";
+        return "/manager/register";
     }
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(){
-        return "login";
+        return "/manager/login";
     }
 
     @RequestMapping(value = "/register/nextStep/{loginId}",method = RequestMethod.GET)
@@ -44,7 +44,7 @@ public class ManagerBaseController {
         List<ManagerFamilyGroup> listBinding = managerBaseService.queryByLoginId(loginId);
         req.setAttribute("listBinding", listBinding);
         req.setAttribute("loginId", loginId);
-        return "nextStep";
+        return "/manager/nextStep";
     }
 
     @RequestMapping(value = "/register/add" , method = RequestMethod.POST)
@@ -140,6 +140,6 @@ public class ManagerBaseController {
 
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String test(){
-        return "index";
+        return "/manager/index";
     }
 }
