@@ -11,10 +11,12 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.mlk.home.UserContext;
 import com.mlk.home.annotation.NeedAuthority;
 import com.mlk.home.common.utils.EmptyUtils;
+import com.mlk.home.common.utils.TokenUtils;
 import com.mlk.home.cookie.CookieUtils;
 import com.mlk.home.entity.ManagerLogin;
 import com.mlk.home.filter.LoginAuthFilter;
 import com.mlk.home.service.ManagerBaseService;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -52,10 +54,18 @@ public class NeedAuthorityInterceptor extends HandlerInterceptorAdapter{
         String accessToken = LoginAuthFilter.getContext(LoginAuthFilter.Header_AccessToken1);
         ManagerLogin user = null;
         if (EmptyUtils.isEmpty(accessToken)) {
-            // 从cookie中获取
-            user=managerBaseService.queryByLoginName(CookieUtils.getName(request));
+            // 从cookie中获取 jti=admin, iat=1531365819, sub=malikai@hujiang.com, iss=www.mlkfamilymanager.com, exp=3062731635
+            JSONObject jsonObject = CookieUtils.getTokenResolved(request);
+            String name = (String) jsonObject.get("jti");
+            user=managerBaseService.queryByLoginName(name);
         } else {
-           //TODO validate token
+            // validate token
+            JSONObject jsonObject = CookieUtils.getTokenResolved(request);
+            String name = (String) jsonObject.get("jti");
+            boolean flag = TokenUtils.validateJWT(jsonObject);
+            if(flag){
+                user=managerBaseService.queryByLoginName(name);
+            }
         }
         if (user == null) {
             throw new Exception("No Authority!");

@@ -8,12 +8,6 @@ import com.mlk.home.common.utils.EmptyUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
-
-/**
- * @author Created by gerry
- * @version 1.0, 2016-12-29-16:26
- * @since com.hujiang 1.0.0
- */
 public class UserContext {
 
     private static volatile UserContext instance = null;
