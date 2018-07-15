@@ -83,7 +83,7 @@ function filteDataAll(result){
         });
         $("#takeNamesListTable").html(takeNames_body);
     }else{
-        $("#takeNamesListTable").html("<tr><td colspan='7'>^_^暂无数据^_^</td></tr>");
+        $("#takeNamesListTable").html("<tr><td colspan='7' align='center'>^_^暂无数据^_^</td></tr>");
     }
 }
 

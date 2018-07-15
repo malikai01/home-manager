@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by malikai on 2018-5-22.
@@ -105,9 +107,10 @@ public class ManagerBaseController {
     @RequestMapping(value = "/toLogin" , method = RequestMethod.POST)
     @ApiOperation(value = "登录")//firstStep
     @ResponseBody
-    public Message login(@RequestBody ManagerLogin model,HttpServletResponse httpServletResponse){
+    public Message login(@RequestBody ManagerLogin model,HttpServletResponse httpServletResponse,HttpServletRequest request){
         //Cookie[] cookies =  request.getCookies();
         Message msg = new Message();
+        model.setPassword(MD5Util.getMD5(model.getPassword()));
         ManagerLogin response=managerBaseService.login(model);
         if(response!=null) {
             String token = TokenUtils.createJwtToken(response.getLoginName());
@@ -118,6 +121,7 @@ public class ManagerBaseController {
             httpServletResponse.addCookie(cookie);
             httpServletResponse.setHeader("access_token",token);
             UserContext.getInstance().setUser(response);
+            request.getSession().setAttribute("uupUserSummary", response);
             msg.setSuccess(true);
             msg.setMsg("登录成功！");
             msg.setObj(response);
@@ -136,6 +140,17 @@ public class ManagerBaseController {
         //logger.info("===="+login.getLoginName());
         logger.info("===="+login1.getLoginName());
         return "";
+    }
+    @RequestMapping(value = "/outLogin")
+    public String outLogin(HttpServletRequest request){
+        //1.清cookie 2.清session
+        HttpSession session = request.getSession();
+        session.invalidate();
+
+        Cookie[] cookies = request.getCookies();
+        Cookie cookie = new Cookie("JWT", null);
+        cookie.setMaxAge(0);
+        return "/manager/login";
     }
 
     @RequestMapping(value = "/index",method = RequestMethod.GET)

@@ -6,7 +6,6 @@
     <meta content="IE=11.0000" http-equiv="X-UA-Compatible" />
     <title>记录生活,美好家庭</title>
     <% include("/templates/common/top.html"){} %>
-    <script type="text/javascript" src="${ctxPath}/takeNames/takeNamesList.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="description" content="欧冶采购，专业的第三方工业品采购服务平台。诚信企业俱乐部，优质资源展示厅" />
     <meta name="keywords" content=" 采购，企业采购，采购网，网上采购，电子采购，集中采购，互联网采购，采购咨询，共享平台，制造企业，招标，投标，采购信息，采购宝，招标公告，B2B网站，中国采购与招标网，采购平台，宝钢采购平台，阳光采购，政府采购，企业集采，中国供应商，名企采购，大买家采购，采购解决方案，购买，咨询价格，求购信息，商机信息，报价，询价信息，商机，东方钢铁，欧冶，欧冶云商，宝钢，500强，工业品，工业企业，MRO" />
@@ -24,7 +23,16 @@
     <div class='logbox' style="background: #f9f9f9;height: 30px;width: 100%;border-bottom: 1px solid #ededed;font-size: 14px;line-height: 20px;color: #333;">
             <div class="top container" style="margin-right:auto;margin-left:auto;width: 940px;position:initial;">
                 <div class="fd-left" style="margin-right: 100px;width: 200px;height: 20px;float: none;position: absolute">
-                    <a href="/home-web/manager/index" title="首页"><img style="height:20px" src='/home-web/img/logo2.png' /></a><a href="/home-web/manager/login">请登录</a>  |  <a href="/home-web/manager/register" target="_blank">免费注册</a>
+                    <a href="/home-web/manager/index" title="首页"><img style="height:20px" src='/home-web/img/logo2.png' /></a>
+                    <%
+                    var userInfoTop = session.uupUserSummary;
+                    if(userInfoTop != null){ %>
+                    <td >${userInfoTop.loginName}</td>
+                    <a href="${ctxPath}/manager/outLogin" style="color: blue">【安全退出】</a>
+                    <%}else{ %>
+                        <a href="/home-web/manager/login">请登录</a>  |
+                        <a href="/home-web/manager/register" target="_blank">免费注册</a>
+                    <% } %>
                 </div>
                 <div class="topbar-mid" style=" width: 400px;float: none;margin-left: 360px;">
                     <a href="/home-web/manager/index" >首页</a>  |
@@ -35,6 +43,47 @@
                 </div>
             </div>
     </div>
+</div>
+<div id="myNiceCarousel" class="carousel slide" data-ride="carousel">
+    <!-- 圆点指示器 -->
+    <ol class="carousel-indicators">
+        <li data-target="#myNiceCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myNiceCarousel" data-slide-to="1"></li>
+        <li data-target="#myNiceCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- 轮播项目 -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <img alt="First slide" src="/home-web/img/test1.png" style="width:1910px;height: 400px">
+            <div class="carousel-caption">
+                <h3>我是第一张幻灯片</h3>
+                <p>:)</p>
+            </div>
+        </div>
+        <div class="item">
+            <img alt="Second slide" src="/home-web/img/test2.png" style="width:1910px;height: 400px">
+            <div class="carousel-caption">
+                <h3>我是第二张幻灯片</h3>
+                <p>0.0</p>
+            </div>
+        </div>
+        <div class="item">
+            <img alt="Third slide" src="/home-web/img/test3.png" style="width:1910px;height: 400px">
+            <div class="carousel-caption">
+                <h3>我是第三张幻灯片</h3>
+                <p>最后一张咯~</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 项目切换按钮 -->
+    <a class="left carousel-control" href="#myNiceCarousel" data-slide="prev">
+        <span class="icon icon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#myNiceCarousel" data-slide="next">
+        <span class="icon icon-chevron-right"></span>
+    </a>
 </div>
 </body>
 </html>

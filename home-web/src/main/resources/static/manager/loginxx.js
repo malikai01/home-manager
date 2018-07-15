@@ -18,6 +18,7 @@ function login(e) {
             success : function(data) {
                 $btn.button('reset');
                 if(data.success){
+                    window.location="/home-web/manager/index"
                     alert(data.msg);
                 }else{
                     alert(data.msg);

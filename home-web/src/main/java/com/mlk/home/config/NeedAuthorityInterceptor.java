@@ -41,6 +41,9 @@ public class NeedAuthorityInterceptor extends HandlerInterceptorAdapter{
         if( !(_handler instanceof HandlerMethod)){
             return true;
         }
+        if(request.getRequestURI().contains("index")){
+            return true;
+        }
         HandlerMethod handler = (HandlerMethod) _handler;
         //先看类上面是否有注解，如果有，则直接验证权限，如果没有则看方法上是否有注解。
         NeedAuthority authrity  = handler.getBeanType().getAnnotation(NeedAuthority.class);
