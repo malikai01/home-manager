@@ -163,12 +163,25 @@ function showTips(ele, validateResult, tipValue, showGreenIcon) {
     }
 }
 
-function submitForm() {
-    $("#submitBtn").attr('disabled', 'true');
-    if (!validateInputValue(null, true)) {
+function submitForm(e) {
+    //$("#submitBtn").attr('disabled', 'true');
+    if (!validateInputValue(e, true)) {
         $("#submitBtn").removeAttr('disabled');
-        return;
+        return false;
     }
+    var code = $("#ccode").val();
+    // alert(code);
+    $.ajax({
+        type : "POST",
+        url : "/home-web/veryCode/checkCode",
+        data : {"code":code},
+        success : function (data) {
+            if(data==0){
+                alert("验证码不正确")
+                return false;
+            }
+        }
+    });
     var loginName = $("#username").val();
     var password = $("#password").val();
     var loginNickName = $("#loginNickName").val();
