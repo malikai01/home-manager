@@ -1,9 +1,5 @@
 package com.mlk.home.config;
 
-/**
- * Created by malikai on 2018-9-14.
- */
-
 import com.mlk.home.base.JsonResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +19,7 @@ import java.io.IOException;
 /**
  * 异常拦截处理器
  *
- * @author chenmc
+ * Created by malikai on 2018-9-14.
  */
 @ControllerAdvice
 @ResponseBody
