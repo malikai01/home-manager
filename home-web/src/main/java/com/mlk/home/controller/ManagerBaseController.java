@@ -142,14 +142,15 @@ public class ManagerBaseController {
         return "";
     }
     @RequestMapping(value = "/outLogin")
-    public String outLogin(HttpServletRequest request){
-        //1.清cookie 2.清session
+    public String outLogin(HttpServletRequest request,HttpServletResponse httpServletResponse){
+        //1.清cookie 2.清session3.清token
         HttpSession session = request.getSession();
         session.invalidate();
 
         Cookie[] cookies = request.getCookies();
         Cookie cookie = new Cookie("JWT", null);
         cookie.setMaxAge(0);
+        httpServletResponse.setHeader("access_token","");
         return "/manager/login";
     }
 
