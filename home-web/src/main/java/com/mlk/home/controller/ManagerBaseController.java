@@ -7,6 +7,7 @@ import com.mlk.home.common.utils.*;
 import com.mlk.home.cookie.CookieUtils;
 import com.mlk.home.entity.ManagerFamilyGroup;
 import com.mlk.home.entity.ManagerLogin;
+import com.mlk.home.filter.LoginAuthFilter;
 import com.mlk.home.service.ManagerBaseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -105,20 +106,14 @@ public class ManagerBaseController {
     }
 
     @RequestMapping(value = "/toLogin" , method = RequestMethod.POST)
-    @ApiOperation(value = "登录")//firstStep
+    @ApiOperation(value = "登录")
     @ResponseBody
     public Message login(@RequestBody ManagerLogin model,HttpServletResponse httpServletResponse,HttpServletRequest request){
-        //Cookie[] cookies =  request.getCookies();
         Message msg = new Message();
         model.setPassword(MD5Util.getMD5(model.getPassword()));
         ManagerLogin response=managerBaseService.login(model);
         if(response!=null) {
             String token = TokenUtils.createJwtToken(response.getLoginName());
-            Cookie cookie = new Cookie("JWT", token);
-            cookie.setPath("/");
-            // 过期时间设为10min
-            cookie.setMaxAge(60*10);
-            httpServletResponse.addCookie(cookie);
             httpServletResponse.setHeader("access_token",token);
             UserContext.getInstance().setUser(response);
             request.getSession().setAttribute("uupUserSummary", response);
@@ -134,23 +129,17 @@ public class ManagerBaseController {
     @ResponseBody
     @NeedAuthority
     @RequestMapping(value = "/modifyUserInfo")
-    public String modifyUserInfo(HttpServletRequest request) {
-         //ManagerLogin login = managerBaseService.queryByLoginName(CookieUtils.getName(request));
+    public String modifyUserInfo() {
          ManagerLogin login1 = UserContext.getInstance().getUser();
-        //logger.info("===="+login.getLoginName());
         logger.info("===="+login1.getLoginName());
         return "";
     }
     @RequestMapping(value = "/outLogin")
-    public String outLogin(HttpServletRequest request,HttpServletResponse httpServletResponse){
-        //1.清cookie 2.清session3.清token
+    public String outLogin(HttpServletRequest request){
         HttpSession session = request.getSession();
         session.invalidate();
 
-        Cookie[] cookies = request.getCookies();
-        Cookie cookie = new Cookie("JWT", null);
-        cookie.setMaxAge(0);
-        httpServletResponse.setHeader("access_token","");
+        UserContext.getInstance().removeUser();
         return "/manager/login";
     }
 
