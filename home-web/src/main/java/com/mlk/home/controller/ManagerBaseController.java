@@ -137,7 +137,7 @@ public class ManagerBaseController {
         return "";
     }
     @RequestMapping(value = "/outLogin")
-    public String outLogin(HttpServletRequest request){
+    public String outLogin(HttpServletRequest request,HttpServletResponse response){
         HttpSession session = request.getSession();
         session.invalidate();
         Cookie[] cookies = request.getCookies();
@@ -145,7 +145,10 @@ public class ManagerBaseController {
              cookies) {
             if(cookie.getName().equals("JWT")){
                 cookie.setMaxAge(0);
+                cookie.setPath("/");
+                response.addCookie(cookie);
                 break;
+
             }
         }
         UserContext.getInstance().removeUser();
