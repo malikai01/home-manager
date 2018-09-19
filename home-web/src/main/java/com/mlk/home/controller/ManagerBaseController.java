@@ -4,10 +4,8 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.mlk.home.UserContext;
 import com.mlk.home.annotation.NeedAuthority;
 import com.mlk.home.common.utils.*;
-import com.mlk.home.cookie.CookieUtils;
 import com.mlk.home.entity.ManagerFamilyGroup;
 import com.mlk.home.entity.ManagerLogin;
-import com.mlk.home.filter.LoginAuthFilter;
 import com.mlk.home.service.ManagerBaseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by malikai on 2018-5-22.
@@ -114,6 +111,11 @@ public class ManagerBaseController {
         ManagerLogin response=managerBaseService.login(model);
         if(response!=null) {
             String token = TokenUtils.createJwtToken(response.getLoginName());
+            Cookie cookie = new Cookie("JWT", token);
+            cookie.setPath("/");
+            // 过期时间设为10min
+            cookie.setMaxAge(60*10);
+            httpServletResponse.addCookie(cookie);
             httpServletResponse.setHeader("access_token",token);
             UserContext.getInstance().setUser(response);
             request.getSession().setAttribute("uupUserSummary", response);
@@ -138,7 +140,14 @@ public class ManagerBaseController {
     public String outLogin(HttpServletRequest request){
         HttpSession session = request.getSession();
         session.invalidate();
-
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie:
+             cookies) {
+            if(cookie.getName().equals("JWT")){
+                cookie.setMaxAge(0);
+                break;
+            }
+        }
         UserContext.getInstance().removeUser();
         return "/manager/login";
     }
