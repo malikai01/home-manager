@@ -28,7 +28,7 @@ public class AspectDemo {
     private Logger log = Logger.getLogger(getClass());
 
     //申明一个切点 里面是 execution表达式
-    @Pointcut("execution(public * com.mlk.home.controller.*(..))")
+    @Pointcut("execution(* com.mlk.home.controller..*.*(..))")
     private void controllerAspect() {
     }
 
@@ -38,13 +38,16 @@ public class AspectDemo {
     public void methodBefore(JoinPoint joinPoint) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
-
         //打印请求内容
         log.info("===============请求内容===============");
         log.info("请求地址:" + request.getRequestURL().toString());
         log.info("请求方式:" + request.getMethod());
         log.info("请求类方法:" + joinPoint.getSignature());
-        log.info("请求类方法参数:" + Arrays.toString(joinPoint.getArgs()));
+        Object[] args = joinPoint.getArgs();
+        if (args != null && args.length >= 1 && args[0] != null) {
+            Object objPar = args[0];
+            log.info("请求类方法参数:" + JSON.toJSONString(objPar));
+        }
         log.info("===============请求内容===============");
     }
 
