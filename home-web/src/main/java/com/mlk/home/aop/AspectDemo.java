@@ -46,7 +46,11 @@ public class AspectDemo {
         Object[] args = joinPoint.getArgs();
         if (args != null && args.length >= 1 && args[0] != null) {
             Object objPar = args[0];
-            log.info("请求类方法参数:" + JSON.toJSONString(objPar));
+            try {
+                log.info("请求类方法参数:" + JSON.toJSONString(objPar));
+            }catch (Exception e){
+                log.error("请求类方法参数转换异常：参数"+objPar.toString()+" error{}",e);
+            }
         }
         log.info("===============请求内容===============");
     }
