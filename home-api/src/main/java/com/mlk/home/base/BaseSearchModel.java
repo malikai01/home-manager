@@ -5,7 +5,6 @@ import com.mlk.home.page.PageConfig;
 import javax.persistence.Transient;
 import java.io.Serializable;
 
-
 public class BaseSearchModel implements Serializable {
     /**
      *
@@ -106,3 +105,4 @@ public class BaseSearchModel implements Serializable {
         this.oper = oper;
     }
 }
+

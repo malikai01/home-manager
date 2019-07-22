@@ -64,6 +64,7 @@
         <module>home-common</module>
         <module>home-service</module>
         <module>home-web</module>
+        <module>home-test</module>
     </modules>
 
 </project>

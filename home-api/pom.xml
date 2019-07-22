@@ -28,6 +28,12 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.14</version>
         </dependency>
+        <!--构建者模式@Builder-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>0.10.2</version>
+        </dependency>
         <!-- rest 依赖jar -->
         <!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-jaxrs -->
         <!--<dependency>

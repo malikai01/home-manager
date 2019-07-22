@@ -13,22 +13,22 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by malikai on 2018-7-9.
  */
-@Service(protocol = {"dubbo"},timeout = 6000)
+@Service(protocol = {"dubbo"}, timeout = 6000)
 @Transactional
 public class TakeNamesServiceImpl implements TakeNamesService {
     @Autowired
     private TakeNamesMapper takeNamesMapper;
+
     @Override
     public boolean addNnames(TakeNames names) {
-        return takeNamesMapper.insert(names)>0;
+        return takeNamesMapper.insert(names) > 0;
     }
 
     @Override
     public PageInfo<TakeNames> queryNames(TakeNamesModel model) {
-        PageHelper.startPage(model.getPage(),model.getRows(),true);
+        PageHelper.startPage(model.getPage(), model.getRows(), true);
         Page<TakeNames> list = takeNamesMapper.queryNames(model);
-        PageInfo pageInfo = new PageInfo<>(model.getPage(),model.getRows(),list.getTotal(),list.getResult());
-        return pageInfo;
+        return new PageInfo<>(model.getPage(), model.getRows(), list.getTotal(), list.getResult());
     }
 
     @Override
@@ -38,6 +38,6 @@ public class TakeNamesServiceImpl implements TakeNamesService {
 
     @Override
     public boolean editNnames(TakeNames names) {
-        return takeNamesMapper.updateByPrimaryKeySelective(names)>0;
+        return takeNamesMapper.updateByPrimaryKeySelective(names) > 0;
     }
 }

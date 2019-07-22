@@ -78,7 +78,7 @@ function filteDataAll(result){
             takeNames_body += '<td style="word-wrap:break-word;word-break:break-all;text-align:center;">'+nullToString(e.memo)+'</td>';
             takeNames_body += '<td style="word-wrap:break-word;word-break:break-all;text-align:center;">'+isShow+'</td>';
             takeNames_body += '<td style="word-wrap:break-word;word-break:break-all;text-align:center;">'+dateFtt("yyyy-MM-dd hh:mm:ss",new Date(e.updateTime))+'</td>';
-            takeNames_body += '<td><button style="text-align: center" class="btn btn-success"   type="button" onclick="editName('+e.id+')">修  改</button></td>';
+            takeNames_body += '<td align="center"><button class="btn btn-success"   type="button" onclick="editName('+e.id+')">修  改</button></td>';
             takeNames_body += '</tr>';
         });
         $("#takeNamesListTable").html(takeNames_body);
