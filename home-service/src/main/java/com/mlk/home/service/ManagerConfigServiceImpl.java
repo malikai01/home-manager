@@ -3,10 +3,10 @@ package com.mlk.home.service;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.mlk.home.base.BaseSearchModel;
 import com.mlk.home.entity.ManagerConfig;
 import com.mlk.home.mapper.ManagerConfigMapper;
 import com.mlk.home.page.PageInfo;
+import com.mlk.home.search.ManagerConfigModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +37,7 @@ public class ManagerConfigServiceImpl implements ManagerConfigService {
     }
 
     @Override
-    public PageInfo<ManagerConfig> queryManagerConfig(BaseSearchModel model) {
+    public PageInfo<ManagerConfig> queryManagerConfig(ManagerConfigModel model) {
         PageHelper.startPage(model.getPage(),model.getRows(),true);
         Page<ManagerConfig> page = managerConfigMapper.queryManagerConfigByPage(model);
 

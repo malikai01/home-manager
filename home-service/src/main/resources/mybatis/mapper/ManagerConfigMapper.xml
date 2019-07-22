@@ -5,7 +5,11 @@
         select * from manager_config where config_key=#{configKey}
     </select>
     <select id="queryManagerConfigByPage" resultType="com.mlk.home.entity.ManagerConfig">
-        select * from manager_config order by create_time desc
+        select * from manager_config where 1 = 1
+        <if test="configKey != null and configKey !=''">
+            and config_key like '%${configKey}%'
+        </if>
+        order by create_time desc
     </select>
 
 </mapper>
