@@ -31,7 +31,7 @@
 
     <javaModelGenerator  targetPackage="com.mlk.home.entity" targetProject="E:\myproject">
     	<property name="constructorBased" value="true"/>
-    	<property name="rootClass" value="com.mlk.home.base.BaseEntity"/>
+    	<property name="rootClass" value="com.hujiang.portal.read.soa.support.model.po.config"/>
     	<property name="trimStrings" value="true" />
     </javaModelGenerator>
 
@@ -39,7 +39,7 @@
 
     <javaClientGenerator targetPackage="com.mlk.home.mapper" targetProject="E:\myproject" type="XMLMAPPER" />
 
-    <table tableName="take_names">
+    <table tableName="users">
        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
     </table>
   </context>

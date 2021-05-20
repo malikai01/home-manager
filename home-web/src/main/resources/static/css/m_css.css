@@ -178,7 +178,7 @@ input::-ms-clear { display: none; }
 .m_l .menu_c ul li{ line-height: 35px; border-top: 1px #dddddd solid; text-align: center;}
 .m_l .menu_c ul li a{ display: block;}
 .m_r{ width: 930px;margin: 0 auto; background: #ffffff; padding:40px 20px;}
-.m_r .m_r_t{ color: #666666; font-size: 16px; text-align: center; background: url(../img/xian_o.png) center center no-repeat;}
+.m_r .m_r_t{ color: #666666; font-size: 16px; text-align: center; background: url(../img/xian_o.png) center center no-repeat;height: 100px;}
 .m_r .m_r_t span{ background: #ffffff; padding: 0 20px;}
 
 .tab_t{ height: 30px;}

@@ -15,19 +15,20 @@ public class TestHashCircle {
 
     public static void main(String[] args) {
         // 每台真实机器节点上保存的记录条数
-        Map<String, Integer> map = new HashMap<String, Integer>();
+        Map<String, Integer> map = new HashMap<>();
 
         // 真实机器节点, 模拟10台
-        List<Node<String>> nodes = new ArrayList<Node<String>>();
+        List<Node<String>> nodes = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
-            map.put(IP_PREFIX + i, 0); // 初始化记录
-            Node<String> node = new Node<String>(IP_PREFIX + i, "node" + i);
+            // 初始化记录
+            map.put(IP_PREFIX + i, 0);
+            Node<String> node = new Node<>(IP_PREFIX + i, "node" + i);
             nodes.add(node);
         }
 
         IHashService iHashService = new HashService();
         // 每台真实机器引入100个虚拟节点
-        ConsistentHash<Node<String>> consistentHash = new ConsistentHash<Node<String>>(iHashService, 500, nodes);
+        ConsistentHash<Node<String>> consistentHash = new ConsistentHash<>(iHashService, 500, nodes);
 
         // 将5000条记录尽可能均匀的存储到10台机器节点上
         for (int i = 0; i < 5000; i++) {

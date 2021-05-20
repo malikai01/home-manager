@@ -10,12 +10,19 @@ import java.util.TreeMap;
  * @date 2021-4-15 17:51
  */
 public class ConsistentHash<T> {
-    // Hash函数接口
+    /**
+     * Hash函数接口
+     */
     private final IHashService iHashService;
-    // 每个机器节点关联的虚拟节点数量
+
+    /**
+     * 每个机器节点关联的虚拟节点数量
+     */
     private final int          numberOfReplicas;
-    // 环形虚拟节点
-    private final SortedMap<Long, T> circle = new TreeMap<Long, T>();
+    /**
+     * 环形虚拟节点
+     */
+    private final SortedMap<Long, T> circle = new TreeMap<>();
 
     public ConsistentHash(IHashService iHashService, int numberOfReplicas, Collection<T> nodes) {
         this.iHashService = iHashService;
